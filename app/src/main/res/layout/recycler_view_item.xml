@@ -2,24 +2,27 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
     <!-- item -->
     <TextView
         android:id="@+id/recycler_view_item_brand_id"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:hint="brand"
         android:textSize="16dp" />
     <!-- person name -->
     <TextView
         android:id="@+id/recycler_view_item_model_id"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:hint="model"
         android:textSize="16dp" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:hint="regNum"
         android:id="@+id/recycler_view_item_regNum_id"/>
 
 </LinearLayout>
