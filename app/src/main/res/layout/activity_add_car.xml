@@ -1,12 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.kree.keehoo.yourcarinfo.AddCarActivity">
 
-</RelativeLayout>
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/car_brand_editText_id"
+        android:hint="Car brand" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/car_model_editText_id"
+        android:hint="Car model" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/car_registration_number_editText_id"
+        android:hint="Car registration number" />
+
+
+    <Button
+        android:id="@+id/pick_insurance_start_date_button_id"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Button do wybierania daty ubezpieczenia"
+        android:text="Wybierz date rozpoczecia ubezpieczenia" />
+
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/set_technical_check_start_date"
+            android:text="Ins Start" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/set_technical_check_duration_button_id"
+            android:layout_toRightOf="@+id/set_technical_check_start_date"
+            android:text="Tech duration"/>
+
+
+    </RelativeLayout>
+
+    <DatePicker
+        android:id="@+id/insurance_start_date_picker_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:datePickerMode="spinner"
+        android:visibility="gone" />
+
+    <DatePicker
+        android:id="@+id/technical_check_start_date_picker_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:datePickerMode="spinner"
+        android:visibility="gone" />
+
+
+</LinearLayout>

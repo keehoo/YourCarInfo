@@ -9,5 +9,10 @@ public class AddCarActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_car);
+
+        //DaoSession daoSession = ((CarApplication) getApplicationContext()).getDaoSession();
+        //CarDao carDao = daoSession.getCarDao();
     }
+
+
 }
