@@ -13,7 +13,7 @@ public class Car {
     private Long dateOfInsuranceStart;
     private Long dateOfInsuranceEnd;
     private Long dateOfTechStart;
-    private Long dateofTechEnd;
+    private Long dateOfTechEnd;
 
     public Car() {
     }
@@ -22,7 +22,7 @@ public class Car {
         this.id = id;
     }
 
-    public Car(Long id, String brand, String model, String regNum, Long dateOfInsuranceStart, Long dateOfInsuranceEnd, Long dateOfTechStart, Long dateofTechEnd) {
+    public Car(Long id, String brand, String model, String regNum, Long dateOfInsuranceStart, Long dateOfInsuranceEnd, Long dateOfTechStart, Long dateOfTechEnd) {
         this.id = id;
         this.brand = brand;
         this.model = model;
@@ -30,8 +30,10 @@ public class Car {
         this.dateOfInsuranceStart = dateOfInsuranceStart;
         this.dateOfInsuranceEnd = dateOfInsuranceEnd;
         this.dateOfTechStart = dateOfTechStart;
-        this.dateofTechEnd = dateofTechEnd;
+        this.dateOfTechEnd = dateOfTechEnd;
     }
+
+
 
     public Long getId() {
         return id;
@@ -89,12 +91,12 @@ public class Car {
         this.dateOfTechStart = dateOfTechStart;
     }
 
-    public Long getDateofTechEnd() {
-        return dateofTechEnd;
+    public Long getDateOfTechEnd() {
+        return dateOfTechEnd;
     }
 
-    public void setDateofTechEnd(Long dateofTechEnd) {
-        this.dateofTechEnd = dateofTechEnd;
+    public void setDateOfTechEnd(Long dateOfTechEnd) {
+        this.dateOfTechEnd = dateOfTechEnd;
     }
 
 }
