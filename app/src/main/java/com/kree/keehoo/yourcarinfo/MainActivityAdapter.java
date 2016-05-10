@@ -13,13 +13,18 @@ import java.util.List;
 public class MainActivityAdapter extends RecyclerView.Adapter<MainActivityAdapter.Holder> {
 
     List<Car> mData;
-
+    private OnItemClickListener onClickListener;
     LayoutInflater layoutInflater;
+
 
     public MainActivityAdapter(Context context, List<Car> mData) {
         this.mData = mData;
         this.layoutInflater = (LayoutInflater)
                 context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+    }
+
+    public void setOnClickListener(OnItemClickListener onClickListener) {
+        this.onClickListener = onClickListener;
     }
 
     @Override
@@ -38,6 +43,9 @@ public class MainActivityAdapter extends RecyclerView.Adapter<MainActivityAdapte
         holder.brand.setText(car.getBrand());
         holder.model.setText(car.getModel());
         holder.regNum.setText(car.getRegNum());
+
+        holder.currentPosition = position;
+        holder.currentObject = car;
     }
 
     @Override
@@ -46,24 +54,39 @@ public class MainActivityAdapter extends RecyclerView.Adapter<MainActivityAdapte
     }
 
 
+    public class Holder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-public class Holder extends RecyclerView.ViewHolder {
+        TextView model;
+        TextView brand;
+        TextView regNum;
+        public MainActivityAdapter adapter;
 
-    TextView model;
-    TextView brand;
-    TextView regNum;
-    MainActivityAdapter adapter;
+        public int currentPosition;
+        public Car currentObject;
 
-    public Holder(View itemView, MainActivityAdapter adapter) {
-        super(itemView);
+        public Holder(View itemView, MainActivityAdapter adapter) {
+            super(itemView);
 
-        this.adapter = adapter;
-        model = (TextView) itemView.findViewById(R.id.recycler_view_item_model_id);
-        brand = (TextView) itemView.findViewById(R.id.recycler_view_item_brand_id);
-        regNum = (TextView) itemView.findViewById(R.id.recycler_view_item_regNum_id);
+            this.adapter = adapter;
+            model = (TextView) itemView.findViewById(R.id.recycler_view_item_model_id);
+            brand = (TextView) itemView.findViewById(R.id.recycler_view_item_brand_id);
+            regNum = (TextView) itemView.findViewById(R.id.recycler_view_item_regNum_id);
+            itemView.setOnClickListener(this);
+        }
 
 
+        @Override
+        public void onClick(View v) {
+            if (adapter.onClickListener != null) {
+                adapter.onClickListener.onClick(currentPosition, currentObject);
+            }
+        }
     }
-}}
+
+    public interface OnItemClickListener {
+        void onClick(int position, Car object);
+    }
+
+}
 
 

@@ -36,10 +36,10 @@ public class AddCarActivity extends AppCompatActivity {
                 intent.putExtra("ins_stop_long", 190000);   // DUMMY data
                 intent.putExtra("tech_start_long", 1000000);  //DUMMY
                 intent.putExtra("tech_stop_long", 190000); // DUMMY
-
-
+                setResult(RESULT_OK, intent);
                 //Car car = new Car(carBrand, carModel, regNum);  // this doesn't work due to lack of construtor, there's no point creating one, because the GreenDao takes care of that, inlcuding assigning id
-                startActivity(intent);
+                //startActivity(intent);
+                finish();
             }
         });
 
