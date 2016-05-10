@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+    <item xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/new_car"
         android:title="Nowy"
         app:showAsAction="always" />
+
+    <item xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/display_car"
+        app:showAsAction="ifRoom"
+        android:title="display car" />
+
 </menu>

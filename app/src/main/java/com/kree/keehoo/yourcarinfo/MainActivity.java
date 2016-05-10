@@ -26,18 +26,35 @@ public class MainActivity extends AppCompatActivity {
         return carDao;
     }
 
+
+    public void allowClicking() {
+        adapter.setOnClickListener(new MainActivityAdapter.OnItemClickListener() {
+            @Override
+            public void onClick(int position, Car object) {
+                Intent intent = new Intent(MainActivity.this, DisplayCarInfoActivity.class);
+                intent.putExtra("car_position", position);
+                Log.d("MainActivity", "Kliknieto " + object.getId());
+                intent.putExtra("car_id", object.getId());
+                intent.putExtra("car_name", object.getBrand());
+                startActivityForResult(intent, 2);
+            }
+        });
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        CarDao carDao = initializeDaoSession();
+        final CarDao carDao = initializeDaoSession();
         carList = initializeDaoSession().loadAll();
         //carDao.deleteAll(); //                                   UNCOMMENT IF YOU NEED TO REMOVE ALL ITEMS FROM THE LIST.
         //addDummyCars(daoSession);
-        Log.d("MainActivity", "" + carList.size());
+        Log.d("MainActivity", "onCREATE    " + carList.size());
         recyclerViewOfTheCarList = (RecyclerView) findViewById(R.id.main_activity_recyclerView);
         recyclerViewOfTheCarList.setLayoutManager(new LinearLayoutManager(this));
+
         adapter = new MainActivityAdapter(this, carList);
+
+        allowClicking();
         recyclerViewOfTheCarList.setAdapter(adapter);
         Log.d("recyclerViewStrt method", "RecyclerView started with " + recyclerViewOfTheCarList + " and list of " + carList.toString());
         Log.d("MainActivity", "Rozmiar Listy samochodow :  " + carList.size() + " Hash code : " + carList.hashCode());
@@ -81,11 +98,20 @@ public class MainActivity extends AppCompatActivity {
             startActivityForResult(intent, 1);
             return true;
         }
+        if (item.getItemId() == R.id.display_car) {
+            Intent intent = new Intent(this, DisplayCarInfoActivity.class);
+
+            startActivity(intent);
+            return true;
+        }
         return super.onOptionsItemSelected(item);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+
+        Log.d("MainActivity", "Method:   onActivityResult");
 
         if (requestCode == 1) {
             if (resultCode == Activity.RESULT_OK) {
@@ -116,12 +142,27 @@ public class MainActivity extends AppCompatActivity {
                 adapter = new MainActivityAdapter(this, carList);
                 //adapter.notifyDataSetChanged();
                 recyclerViewOfTheCarList.setAdapter(adapter);
-
             }
             /*if (resultCode == Activity.RESULT_CANCELED) {
                 //Write your code if there's no result
             }*/
-        }
+        } else if (requestCode == 2) {
+            if (resultCode == Activity.RESULT_OK) {
+                CarDao carDao = initializeDaoSession();
+                Long idToBeDeleter = data.getLongExtra("id_to_be_deleted", 100000L);
+                if (idToBeDeleter != 100000L) {
+                    carDao.deleteByKey(idToBeDeleter);
+                    Log.d("MainActivity", "Deleted id number " + idToBeDeleter);
+                    carList = carDao.loadAll();
+                    adapter = new MainActivityAdapter(this, carList);
+                    //adapter.notifyDataSetChanged();
+                    recyclerViewOfTheCarList.setAdapter(adapter);
+                    allowClicking();
+                }
 
-    }//onActivityResult
+            }
+
+        }//onActivityResult
+    }
+
 }
