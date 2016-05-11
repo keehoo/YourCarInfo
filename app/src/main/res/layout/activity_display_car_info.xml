@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -10,16 +11,66 @@
     tools:context="com.kree.keehoo.yourcarinfo.DisplayCarInfoActivity">
 
     <TextView
+        android:id="@+id/display_car_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/display_car_name"
-        android:hint="car name"/>
+        android:hint="car name"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/display_car_model"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/display_car_name"
+        android:hint="model"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/display_ins_start_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@id/display_car_model"
+        android:hint="Insurance Start Date"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin" />
+
+    <cn.iwgang.countdownview.CountdownView
+        android:id="@+id/count_down_tech_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="#77FFFFFF"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        app:isHideTimeBackground="true"
+        app:isShowDay="true"
+        app:isShowHour="true"
+        app:isShowMillisecond="true"
+        app:isShowMinute="true"
+        app:isShowSecond="true"
+        app:isShowTimeBgDivisionLine="true"
+        app:isTimeTextBold="true"
+        app:suffixDay="dni"
+        app:suffixGravity="bottom"
+        app:suffixHour="godzin"
+
+        app:suffixMinute="minut"
+        app:suffixSecond="sekund"
+        app:suffixTextColor="@color/colorPrimaryDark"
+        app:suffixTextSize="12sp"
+        app:timeTextColor="@color/colorPrimaryDark"
+        app:timeTextSize="22sp" />
 
     <Button
+        android:id="@+id/displ_button_delete_id"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/displ_button_delete_id"
-        android:text="delete"
-        android:layout_below="@+id/display_car_name"/>
+        android:layout_alignParentBottom="true"
+        android:text="delete" />
 
 </RelativeLayout>

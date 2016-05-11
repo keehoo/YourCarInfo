@@ -44,10 +44,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        final CarDao carDao = initializeDaoSession();
+        CarDao carDao = initializeDaoSession();
         carList = initializeDaoSession().loadAll();
-        //carDao.deleteAll(); //                                   UNCOMMENT IF YOU NEED TO REMOVE ALL ITEMS FROM THE LIST.
-        //addDummyCars(daoSession);
         Log.d("MainActivity", "onCREATE    " + carList.size());
         recyclerViewOfTheCarList = (RecyclerView) findViewById(R.id.main_activity_recyclerView);
         recyclerViewOfTheCarList.setLayoutManager(new LinearLayoutManager(this));
@@ -58,19 +56,7 @@ public class MainActivity extends AppCompatActivity {
         recyclerViewOfTheCarList.setAdapter(adapter);
         Log.d("recyclerViewStrt method", "RecyclerView started with " + recyclerViewOfTheCarList + " and list of " + carList.toString());
         Log.d("MainActivity", "Rozmiar Listy samochodow :  " + carList.size() + " Hash code : " + carList.hashCode());
-
-
-      /*  addCarButton = (Button) findViewById(R.id.add_car_button_id);
-        addCarButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, AddCarActivity.class);
-                startActivity(intent);
-            }
-        });*/
-
-
-    }
+}
 
 
     public void addDummyCars(DaoSession daoSession) {
@@ -157,12 +143,13 @@ public class MainActivity extends AppCompatActivity {
                     adapter = new MainActivityAdapter(this, carList);
                     //adapter.notifyDataSetChanged();
                     recyclerViewOfTheCarList.setAdapter(adapter);
-                    allowClicking();
+                    //allowClicking();
                 }
 
             }
 
         }//onActivityResult
+        allowClicking();
     }
 
 }
