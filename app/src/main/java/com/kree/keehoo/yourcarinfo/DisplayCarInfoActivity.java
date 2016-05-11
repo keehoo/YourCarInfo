@@ -17,7 +17,8 @@ public class DisplayCarInfoActivity extends AppCompatActivity {
     private Button deleteButton;
     private Long id_to_be_deleted;
     private CountdownView countDownInsurance;
-    private final long milis = 180000;
+    private CountdownView countDownTechnical;
+    private final long milis = 18000000;
 
 
     @Override
@@ -40,8 +41,8 @@ public class DisplayCarInfoActivity extends AppCompatActivity {
         Log.d(p, " ---!!! ON CREATE !!!---");
 
 
-
-
+        countDownTechnical = (CountdownView) findViewById(R.id.count_down_ins_id);
+        countDownInsurance = (CountdownView) findViewById(R.id.count_down_tech_id);
         carName = (TextView) findViewById(R.id.display_car_name);
         deleteButton = (Button)findViewById(R.id.displ_button_delete_id);
 
@@ -49,12 +50,11 @@ public class DisplayCarInfoActivity extends AppCompatActivity {
         carName.setText(intent.getStringExtra("car_name"));
         id_to_be_deleted = intent.getLongExtra("car_id", 100000);
         Log.d("Display car acti ", "  !!!!!!!!!Powinno sie uruchomic display car activity!!!!!!!!!!!!!!");
-        countDownInsurance = (CountdownView) findViewById(R.id.count_down_tech_id);
 
-        if (countDownInsurance != null) {
-            Log.d("p", "countdown start.... method with "+ milis+" milliseconds");
-            countDownInsurance.start(milis); // Millisecond
-        }
+
+        countDownInsurance.start(milis*2); // Millisecond
+        countDownTechnical.start(milis+10000);  //TODO: this needs to be the proper milisecond value - end of insurance (minus) start of insurance;
+
 
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,6 +67,6 @@ public class DisplayCarInfoActivity extends AppCompatActivity {
                 finish();
             }
         });
-//TODO: this needs to be the proper milisecond value - end of insurance (minus) start of insurance;
+
     }
 }
