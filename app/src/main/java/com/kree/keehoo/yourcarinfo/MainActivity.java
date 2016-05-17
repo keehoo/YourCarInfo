@@ -20,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
     public List<Car> carList;
 
 
+
     public CarDao initializeDaoSession() {
         DaoSession daoSession = ((CarApplication) getApplicationContext()).getDaoSession();
         CarDao carDao = daoSession.getCarDao();
@@ -32,10 +33,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(int position, Car object) {
                 Intent intent = new Intent(MainActivity.this, DisplayCarInfoActivity.class);
-                intent.putExtra("car_position", position);
                 Log.d("MainActivity", "Kliknieto " + object.getId());
-                intent.putExtra("car_id", object.getId());
-                intent.putExtra("car_name", object.getBrand());
+                intent.putExtra("car_position", position);  // position on the LIST
+                intent.putExtra("car_id", object.getId());  // ID from the SQLite db
+                intent.putExtra("car_name", object.getBrand()); // Car brand ...
                 startActivityForResult(intent, 2);
             }
         });
@@ -44,7 +45,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        CarDao carDao = initializeDaoSession();
         carList = initializeDaoSession().loadAll();
         Log.d("MainActivity", "onCREATE    " + carList.size());
         recyclerViewOfTheCarList = (RecyclerView) findViewById(R.id.main_activity_recyclerView);
@@ -84,12 +84,12 @@ public class MainActivity extends AppCompatActivity {
             startActivityForResult(intent, 1);
             return true;
         }
-        if (item.getItemId() == R.id.display_car) {
+        /*if (item.getItemId() == R.id.display_car) {
             Intent intent = new Intent(this, DisplayCarInfoActivity.class);
 
             startActivity(intent);
             return true;
-        }
+        }*/
         return super.onOptionsItemSelected(item);
     }
 

@@ -1,82 +1,127 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.kree.keehoo.yourcarinfo.AddCarActivity">
 
+    <LinearLayout
+        android:layout_alignParentTop="true"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:id="@+id/linear_layout_main_info_id"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin">
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/car_brand_editText_id"
-        android:hint="Car brand" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Utwórz Nowy Samochód"
+            android:textAlignment="center"
+            android:textSize="35sp"
+            android:textStyle="bold"
+            android:paddingBottom="@dimen/activity_vertical_margin"
+            android:paddingTop="@dimen/activity_vertical_margin"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"/>
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/car_model_editText_id"
-        android:hint="Car model" />
+        <EditText
+            android:id="@+id/car_brand_editText_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Marka samochodu"
+            android:paddingBottom="@dimen/activity_vertical_margin"
+            android:paddingTop="@dimen/activity_vertical_margin"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            />
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/car_registration_number_editText_id"
-        android:hint="Car registration number" />
+        <EditText
+            android:id="@+id/car_model_editText_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Model samochodu"
+            android:paddingBottom="@dimen/activity_vertical_margin"
+            android:paddingTop="@dimen/activity_vertical_margin"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"/>
+
+        <EditText
+            android:id="@+id/car_registration_number_editText_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Numer rejestracyjny"
+            android:paddingBottom="@dimen/activity_vertical_margin"
+            android:paddingTop="@dimen/activity_vertical_margin"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"/>
 
 
-    <Button
-        android:id="@+id/pick_insurance_start_date_button_id"
+        <Button
+            android:id="@+id/pick_insurance_start_date_button_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:text="Wybierz datę rozpoczęcia ubezpieczenia" />
+        <Button
+            android:id="@+id/pick_tec_start_date_button_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:text="Wybierz datę wykonania przeglądu" />
+
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Button do wybierania daty ubezpieczenia"
-        android:text="Wybierz date rozpoczecia ubezpieczenia" />
+        android:id="@+id/insurance_date_picker_layout_id"
+        android:layout_below="@+id/linear_layout_main_info_id">
 
-
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-
-        <Button
+        <DatePicker
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/set_technical_check_start_date"
-            android:text="Ins Start" />
+            android:visibility="gone"
+            android:id="@+id/date_picker_insurance_id">
 
-        <Button
+
+        </DatePicker>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/technical_date_picker_layout_id"
+        android:layout_below="@+id/insurance_date_picker_layout_id">
+
+        <DatePicker
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/set_technical_check_duration_button_id"
-            android:layout_toRightOf="@+id/set_technical_check_start_date"
-            android:text="Tech duration"/>
+            android:visibility="gone"
+            android:id="@+id/date_picker_technical_id">
+
+        </DatePicker>
+
+    </LinearLayout>
 
 
-    </RelativeLayout>
-
-    <DatePicker
-        android:id="@+id/insurance_start_date_picker_id"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:datePickerMode="spinner"
-        android:visibility="gone" />
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal">
 
-    <DatePicker
-        android:id="@+id/technical_check_start_date_picker_id"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:datePickerMode="spinner"
-        android:visibility="gone" />
+        <Button
+            android:id="@+id/sendButton_id"
+            android:layout_width="match_parent"
+            android:layout_height="60sp"
+            android:layout_gravity="fill"
+            android:text="Send" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/sendButton_id"
-        android:text="Send"/>
+    </LinearLayout>
 
-
-</LinearLayout>
+</RelativeLayout>

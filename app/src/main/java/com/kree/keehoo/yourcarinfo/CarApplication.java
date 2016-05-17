@@ -3,12 +3,14 @@ package com.kree.keehoo.yourcarinfo;
 import android.app.Application;
 import android.database.sqlite.SQLiteDatabase;
 
+import net.danlew.android.joda.JodaTimeAndroid;
+
 /**
  * Created by keehoo on 27.04.2016.
  */
-public class CarApplication extends Application{
+public class CarApplication extends Application {
 
-public DaoSession daoSession;
+    public DaoSession daoSession;
 
     @Override
     public void onCreate() {
@@ -18,6 +20,7 @@ public DaoSession daoSession;
         SQLiteDatabase db = helper.getWritableDatabase();
         DaoMaster daoMaster = new DaoMaster(db);
         daoSession = daoMaster.newSession();
+        JodaTimeAndroid.init(this);
     }
 
     public DaoSession getDaoSession() {

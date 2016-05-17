@@ -159,7 +159,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/insurance_date"
+            android:id="@+id/insurance_date_textView_id"
             android:hint="date here"
             android:layout_weight="1"
             android:paddingBottom="@dimen/activity_vertical_margin"
@@ -197,7 +197,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/technical_date"
+            android:id="@+id/technical_date_textView_id"
             android:hint="date here"
             android:layout_weight="1"
             android:paddingBottom="@dimen/activity_vertical_margin"
