@@ -33,11 +33,12 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(int position, Car object) {
                 Intent intent = new Intent(MainActivity.this, DisplayCarInfoActivity.class);
-                Log.d("MainActivity", "Kliknieto " + object.getId());
+                Log.d("MainActivity", "Kliknieto pozycje na liscie  db:  " + object.getId());
                 intent.putExtra("car_position", position);  // position on the LIST
                 intent.putExtra("car_id", object.getId());  // ID from the SQLite db
                 intent.putExtra("car_name", object.getBrand()); // Car brand ...
                 startActivityForResult(intent, 2);
+
             }
         });
     }
@@ -84,20 +85,15 @@ public class MainActivity extends AppCompatActivity {
             startActivityForResult(intent, 1);
             return true;
         }
-        /*if (item.getItemId() == R.id.display_car) {
-            Intent intent = new Intent(this, DisplayCarInfoActivity.class);
 
-            startActivity(intent);
-            return true;
-        }*/
         return super.onOptionsItemSelected(item);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        //super.onActivityResult(requestCode, resultCode, data);
 
-
-        Log.d("MainActivity", "Method:   onActivityResult");
+        Log.d("MainActivity", "     Method:   onActivityResult");
 
         if (requestCode == 1) {
             if (resultCode == Activity.RESULT_OK) {
@@ -132,23 +128,7 @@ public class MainActivity extends AppCompatActivity {
             /*if (resultCode == Activity.RESULT_CANCELED) {
                 //Write your code if there's no result
             }*/
-        } else if (requestCode == 2) {
-            if (resultCode == Activity.RESULT_OK) {
-                CarDao carDao = initializeDaoSession();
-                Long idToBeDeleter = data.getLongExtra("id_to_be_deleted", 100000L);
-                if (idToBeDeleter != 100000L) {
-                    carDao.deleteByKey(idToBeDeleter);
-                    Log.d("MainActivity", "Deleted id number " + idToBeDeleter);
-                    carList = carDao.loadAll();
-                    adapter = new MainActivityAdapter(this, carList);
-                    //adapter.notifyDataSetChanged();
-                    recyclerViewOfTheCarList.setAdapter(adapter);
-                    //allowClicking();
-                }
-
-            }
-
-        }//onActivityResult
+        }  //onActivityResult
         allowClicking();
     }
 

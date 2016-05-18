@@ -1,7 +1,10 @@
 package com.kree.keehoo.yourcarinfo;
 
+import android.app.DatePickerDialog;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -13,7 +16,7 @@ import android.widget.LinearLayout;
 import java.util.Calendar;
 import java.util.Date;
 
-public class AddCarActivity extends AppCompatActivity {
+public class AddCarActivity extends FragmentActivity {
 
 
     EditText carBrand;
@@ -24,6 +27,14 @@ public class AddCarActivity extends AppCompatActivity {
     Button technicalButton;
     DatePicker dpInsurance;
     LinearLayout lyMain;
+
+    DatePickerFragment_Insurance frag;
+    Button button;
+    Calendar now;
+
+
+
+    long dateOfInsuranceStart;
 
 
     @Override
@@ -38,7 +49,7 @@ public class AddCarActivity extends AppCompatActivity {
         carModel = (EditText) findViewById(R.id.car_model_editText_id);
         regNum = (EditText) findViewById(R.id.car_registration_number_editText_id);
         sendButton = (Button) findViewById(R.id.sendButton_id);
-        dpInsurance = (DatePicker) findViewById(R.id.date_picker_insurance_id);
+        //dpInsurance = (DatePicker) findViewById(R.id.date_picker_insurance_id);
         insuranceButton = (Button) findViewById(R.id.pick_insurance_start_date_button_id);
 
 
@@ -59,26 +70,41 @@ public class AddCarActivity extends AppCompatActivity {
         });
 
         insuranceButton.setOnClickListener(new View.OnClickListener() {
-            @Override
             public void onClick(View v) {
-                lyMain.setVisibility(View.GONE);
-                dpInsurance.setVisibility(View.VISIBLE);
-                getDateFromDatePicket(dpInsurance);
-                lyMain.setVisibility(View.VISIBLE);
+                Log.d("Main Activity", "Button ON CLICK!!!");
+                showDialog();
             }
         });
 
 
     }
-    public long getDateFromDatePicket(DatePicker datePicker) {
-        int day = datePicker.getDayOfMonth();
-        int month = datePicker.getMonth();
-        int year = datePicker.getYear();
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(year, month, day);
 
-        return calendar.getTimeInMillis();
+
+    public void showDialog() {
+        Log.d("Main Activity", " Show Dialog method called!!!");
+        FragmentTransaction ft = getFragmentManager().beginTransaction(); //get the fragment
+        frag = DatePickerFragment_Insurance.newInstance(this, new DateDialogFragmentListener() {   // TO TUTAJ POJAWIA SIE NOWA INSTAJC EINTERFEJSU????
+            public void updateChangedDate(int year, int month, int day) {
+                button.setText(String.valueOf(month + 1) + "-" + String.valueOf(day) + "-" + String.valueOf(year));
+                now.set(year, month, day);
+            }
+        }, now);
+
+        frag.show(ft, "DateDialogFragment");
+
+    }
+
+    public interface DateDialogFragmentListener {
+        //this interface is a listener between the Date Dialog fragment and the activity to update the buttons date
+        void updateChangedDate(int year, int month, int day);
     }
 
 
+    public long getDateOfInsuranceStart() {
+        return dateOfInsuranceStart;
+    }
+
+    public void setDateOfInsuranceStart(long dateOfInsuranceStart) {
+        this.dateOfInsuranceStart = dateOfInsuranceStart;
+    }
 }

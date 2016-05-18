@@ -22,7 +22,7 @@ public class DisplayCarInfoActivity extends AppCompatActivity {
     private static String p = "  DisplayCarActivityInfo  ";
     private TextView carName;
     private Button deleteButton;
-    private Long currentDaoId;
+    private long currentDaoId;
     private CountdownView countDownInsurance;
     private CountdownView countDownTechnical;
     private final long milis = 18000000;
@@ -44,7 +44,7 @@ public class DisplayCarInfoActivity extends AppCompatActivity {
         //carName.setText(intent.getStringExtra("car_name"));
         currentDaoId = intent.getLongExtra("car_id", 100000);
         Log.d(p, "current dao ID :  "+currentDaoId);
-        Log.d(p, "current object L  "+currentObject);
+        Log.d(p, "current object :  "+currentObject);
 
 
         //initializeDaoSession();
@@ -79,8 +79,9 @@ public class DisplayCarInfoActivity extends AppCompatActivity {
                 Intent intent = new Intent(DisplayCarInfoActivity.this, MainActivity.class);
                 intent.putExtra("currentDaoId", currentDaoId);
                 setResult(RESULT_OK, intent);
-                //Car car = new Car(carBrand, carModel, regNum);  // this doesn't work due to lack of construtor, there's no point creating one, because the GreenDao takes care of that, inlcuding assigning id
-                //startActivity(intent);
+                Log.d("DisplayCarActivity", "Delete button clicked with id to delete = "+currentDaoId);
+                carDao.deleteByKey(currentDaoId);
+                startActivity(intent);
                 finish();
             }
         });
