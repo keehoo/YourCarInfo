@@ -6,7 +6,6 @@ import android.app.DialogFragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.DatePicker;
 
 import java.util.Calendar;
@@ -14,7 +13,7 @@ import java.util.Calendar;
 /**
  * Created by keehoo on 17.05.2016.
  */
-public class DatePickerFragment_Technical extends DialogFragment {
+public class DatePickerFragment extends DialogFragment {
 
 
     public static String TAG = "DateDialogFragment";
@@ -24,11 +23,12 @@ public class DatePickerFragment_Technical extends DialogFragment {
     static int mDay;
     static AddCarActivity.DateDialogFragmentListener mListener;
 
-    public static DatePickerFragment_Technical newInstance(Context context, AddCarActivity.DateDialogFragmentListener listener, Calendar now) {
-        DatePickerFragment_Technical dialog = new DatePickerFragment_Technical();
+    public static DatePickerFragment newInstance(Context context, AddCarActivity.DateDialogFragmentListener listener, Calendar now) {
+        DatePickerFragment dialog = new DatePickerFragment();
         Log.d(TAG, "New instance method called inside the " + TAG);
         mContext = context;
         mListener = listener;
+        //Calendar c = Calendar.getInstance();
 
         mYear = now.get(Calendar.YEAR);
         mMonth = now.get(Calendar.MONTH);
