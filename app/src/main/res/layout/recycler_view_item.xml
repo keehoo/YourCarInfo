@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="@dimen/activity_horizontal_margin">
@@ -17,26 +17,56 @@
         android:id="@+id/recycler_view_item_model_id"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/recycler_view_item_brand_id"
         android:hint="model"
         android:textSize="16dp" />
 
     <TextView
+        android:id="@+id/recycler_view_item_regNum_id"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/recycler_view_item_model_id"
         android:hint="regNum"
-        android:id="@+id/recycler_view_item_regNum_id"/>
+        android:textSize="16dp"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:text="data rozpoczęcia ubezpieczenia:"
+        android:textSize="9dp"
+        android:id="@+id/text_ins_id"/>
+
+    <TextView
         android:id="@+id/date_of_insurance_start_long_id"
-        android:hint="date of insurance start"/>
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:textAlignment="gravity"
+        android:gravity="right"
+        android:hint="date of insurance start"
+        android:textSize="14dp"
+        android:layout_below="@+id/text_ins_id"/>
 
     <TextView
         android:layout_width="wrap_content"
+        android:textSize="9dp"
         android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/date_of_insurance_start_long_id"
+        android:text="data wykonania przeglądu:"
+        android:id="@+id/text_tech_id"/>
+
+    <TextView
         android:id="@+id/date_od_technical_start_long_id"
-        android:hint="Date of technical start"/>
+        android:layout_width="wrap_content"
+        android:textAlignment="gravity"
+        android:gravity="right"
+        android:layout_height="wrap_content"
+        android:textSize="14dp"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/text_tech_id"
+        android:hint="Date of technical start" />
 
 
-</LinearLayout>
+</RelativeLayout>

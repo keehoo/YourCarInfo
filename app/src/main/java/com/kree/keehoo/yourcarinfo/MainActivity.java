@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
 }
 
 
-    public void addDummyCars(DaoSession daoSession) {
+    /*public void addDummyCars(DaoSession daoSession) {
 
         Car car = new Car();
         car.setBrand("Ford---PUMA");
@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
         car.setRegNum("GD481HJ");
         CarDao carDao = daoSession.getCarDao();
         carDao.insertOrReplace(car);
-    }
+    }*/
 
 
     @Override

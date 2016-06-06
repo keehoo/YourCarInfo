@@ -7,6 +7,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import net.danlew.android.joda.JodaTimeAndroid;
+
+import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
+
 import java.util.List;
 
 
@@ -21,6 +28,8 @@ public class MainActivityAdapter extends RecyclerView.Adapter<MainActivityAdapte
         this.mData = mData;
         this.layoutInflater = (LayoutInflater)
                 context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        JodaTimeAndroid.init(context);
+
     }
 
     public void setOnClickListener(OnItemClickListener onClickListener) {
@@ -32,6 +41,7 @@ public class MainActivityAdapter extends RecyclerView.Adapter<MainActivityAdapte
         // ON CREATE WIDOKU Z XML-a - tworzymy obiekt V i inflatujemy tam layout itemu z XML-a - jednego wiersza, potem uzupelnimy ten widok wartosciami, które przechowuje holder
         View v = layoutInflater.inflate(R.layout.recycler_view_item, parent, false);
         return new Holder(v, this);  // parametrami są widok oraz adapter (this);
+
     }
 
     @Override
@@ -43,8 +53,11 @@ public class MainActivityAdapter extends RecyclerView.Adapter<MainActivityAdapte
         holder.brand.setText(car.getBrand());
         holder.model.setText(car.getModel());
         holder.regNum.setText(car.getRegNum());
-        holder.dateOfInsuranceStart.setText(""+car.getDateOfInsuranceStart());
-        holder.dateOfTechnicalStart.setText(""+car.getDateOfTechStart());
+        //LocalDate date = LocalDate.now();
+        DateTimeFormatter fmt = DateTimeFormat.forPattern("d MMMM, yyyy");
+
+        holder.dateOfInsuranceStart.setText(new DateTime(car.getDateOfInsuranceStart()).toString(fmt));
+        holder.dateOfTechnicalStart.setText(new DateTime(car.getDateOfTechStart()).toString(fmt));
 
         holder.currentPosition = position;
         holder.currentObject = car;
