@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:padding="@dimen/activity_horizontal_margin">
 
     <!-- item -->
     <TextView
@@ -24,5 +25,18 @@
         android:layout_height="wrap_content"
         android:hint="regNum"
         android:id="@+id/recycler_view_item_regNum_id"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/date_of_insurance_start_long_id"
+        android:hint="date of insurance start"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/date_od_technical_start_long_id"
+        android:hint="Date of technical start"/>
+
 
 </LinearLayout>

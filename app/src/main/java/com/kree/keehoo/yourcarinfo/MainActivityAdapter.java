@@ -43,6 +43,8 @@ public class MainActivityAdapter extends RecyclerView.Adapter<MainActivityAdapte
         holder.brand.setText(car.getBrand());
         holder.model.setText(car.getModel());
         holder.regNum.setText(car.getRegNum());
+        holder.dateOfInsuranceStart.setText(""+car.getDateOfInsuranceStart());
+        holder.dateOfTechnicalStart.setText(""+car.getDateOfTechStart());
 
         holder.currentPosition = position;
         holder.currentObject = car;
@@ -59,6 +61,8 @@ public class MainActivityAdapter extends RecyclerView.Adapter<MainActivityAdapte
         TextView model;
         TextView brand;
         TextView regNum;
+        TextView dateOfInsuranceStart;
+        TextView dateOfTechnicalStart;
         public MainActivityAdapter adapter;
 
         public int currentPosition;
@@ -71,6 +75,9 @@ public class MainActivityAdapter extends RecyclerView.Adapter<MainActivityAdapte
             model = (TextView) itemView.findViewById(R.id.recycler_view_item_model_id);
             brand = (TextView) itemView.findViewById(R.id.recycler_view_item_brand_id);
             regNum = (TextView) itemView.findViewById(R.id.recycler_view_item_regNum_id);
+            dateOfInsuranceStart = (TextView) itemView.findViewById(R.id.date_of_insurance_start_long_id);
+            dateOfTechnicalStart = (TextView) itemView.findViewById(R.id.date_od_technical_start_long_id);
+
             itemView.setOnClickListener(this);
         }
 

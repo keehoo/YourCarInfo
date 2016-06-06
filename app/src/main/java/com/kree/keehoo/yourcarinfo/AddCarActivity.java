@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import java.util.Calendar;
 
@@ -21,14 +22,20 @@ public class AddCarActivity extends FragmentActivity {
     Button sendButton;
     Button insuranceButton;
     Button technicalButton;
+    Button insuranceDurationButton;
+    Button technicalDurationButton;
     LinearLayout lyMain;
     DatePickerFragment frag;
+    NumberPickerFragment fragNumber;
     Calendar now;
 
 
     long dateOfInsuranceStart;
-
+    long insuranceDuration;
+    long dateOfInsuranceStop;
     long dateOfTechnicalStart;
+    long technicalDuration;
+    long dateOfTechnicalStop;
 
 
     @Override
@@ -46,6 +53,8 @@ public class AddCarActivity extends FragmentActivity {
         //dpInsurance = (DatePicker) findViewById(R.id.date_picker_insurance_id);
         insuranceButton = (Button) findViewById(R.id.pick_insurance_start_date_button_id);
         technicalButton = (Button) findViewById(R.id.pick_tec_start_date_button_id);
+        insuranceDurationButton = (Button) findViewById(R.id.insurance_duration_button_id);
+        technicalDurationButton = (Button) findViewById(R.id.technical_duration_button_id);
 
 
         sendButton.setOnClickListener(new View.OnClickListener() {
@@ -55,9 +64,14 @@ public class AddCarActivity extends FragmentActivity {
                 intent.putExtra("carBrand", carBrand.getText().toString());
                 intent.putExtra("carModel", carModel.getText().toString());
                 intent.putExtra("regNum", regNum.getText().toString());
-                intent.putExtra("ins_start_long", 100000l);  // DUMMY LONG of ins start;
-                intent.putExtra("ins_stop_long", 190000l);   // DUMMY data
-                intent.putExtra("tech_start_long", 1000000l);  //DUMMY
+                intent.putExtra("ins_start_long", getDateOfInsuranceStart());
+                Log.d("GetDateOfInsurance", ""+getDateOfInsuranceStart());
+
+                intent.putExtra("ins_stop_long", 100000L); //DUMMY
+
+                Log.d("getDateOfTechnical", ""+getDateOfTechnicalStart());
+
+                intent.putExtra("tech_start_long", getDateOfTechnicalStart());
                 intent.putExtra("tech_stop_long", 190000l); // DUMMY
                 setResult(RESULT_OK, intent);
                 finish();
@@ -79,6 +93,17 @@ public class AddCarActivity extends FragmentActivity {
             }
         });
 
+        insuranceDurationButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showNumberPicker();
+            }
+        });
+
+
+
+
+
 
     }
 
@@ -97,8 +122,19 @@ public class AddCarActivity extends FragmentActivity {
                 },
                 now);
         frag.show(ft, "DateDialogFragment");
+    }
 
 
+    public void showNumberPicker() {
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        fragNumber = NumberPickerFragment.newInstance(this, new NumberPickerFragmentListener() {
+            @Override
+            public void updateChangeDate(int number) {
+                Log.d("show Nber Pcker", " ShowNumberPicker method called!!!!!");
+
+            }
+        });
+        fragNumber.show(ft, "NumberPickerFragment");
     }
 
     public void showDialog() {
@@ -122,6 +158,10 @@ public class AddCarActivity extends FragmentActivity {
         void updateChangedDate(int year, int month, int day);
     }
 
+    public interface NumberPickerFragmentListener {
+        void updateChangeDate(int number);
+    }
+
 
     public long getDateOfInsuranceStart() {
         return dateOfInsuranceStart;
@@ -138,6 +178,12 @@ public class AddCarActivity extends FragmentActivity {
 
     public void setDateOfTechnicalStart(long dateOfTechnicalStart) {
         this.dateOfTechnicalStart = dateOfTechnicalStart;
+    }
+
+    public void onUserSelectValue(String selectedValue) {
+
+        // TODO add your implementation.
+        Toast.makeText(getBaseContext(), ""+ selectedValue, Toast.LENGTH_LONG).show();
     }
 
 }
