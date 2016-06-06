@@ -13,6 +13,10 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import net.danlew.android.joda.JodaTimeAndroid;
+
+import org.joda.time.DateTime;
+
 import java.util.Calendar;
 
 public class AddCarActivity extends FragmentActivity {
@@ -32,20 +36,33 @@ public class AddCarActivity extends FragmentActivity {
     NumberPickerFragment fragNumber;
     Calendar now;
     SharedPreferences sharedPreferences;
-
-
-    long dateOfInsuranceStart;
-    long insuranceDuration;
     long dateOfInsuranceStop;
     long dateOfTechnicalStart;
-    long technicalDuration;
+    int technicalDuration;
     long dateOfTechnicalStop;
+    long dateOfInsuranceStart;
+    int insuranceDuration;
+
+
+    private long calculateStopLong(long insStart, int insuranceDuration) {
+
+        if (insStart == 0 || insuranceDuration == 0) {
+            Log.d("Same nulle", "SAASDASD");
+            finish();
+        } else {
+            DateTime dt = new DateTime(insStart);
+            dt.plusMonths(insuranceDuration);
+            return dt.getMillis();
+        }
+        return 90L;
+    }
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_car);
+        JodaTimeAndroid.init(this);
 
         sharedPreferences = getSharedPreferences("prefs", Context.MODE_PRIVATE);
         Log.d("AddCarActivity", " Sprawdzam czy onCreate został wywolany tutaj przy dodawaniu samochodu");
@@ -55,7 +72,6 @@ public class AddCarActivity extends FragmentActivity {
         carModel = (EditText) findViewById(R.id.car_model_editText_id);
         regNum = (EditText) findViewById(R.id.car_registration_number_editText_id);
         sendButton = (Button) findViewById(R.id.sendButton_id);
-        //dpInsurance = (DatePicker) findViewById(R.id.date_picker_insurance_id);
         insuranceButton = (Button) findViewById(R.id.pick_insurance_start_date_button_id);
         technicalButton = (Button) findViewById(R.id.pick_tec_start_date_button_id);
         insuranceDurationButton = (Button) findViewById(R.id.insurance_duration_button_id);
@@ -71,17 +87,15 @@ public class AddCarActivity extends FragmentActivity {
                 intent.putExtra("regNum", regNum.getText().toString());
                 intent.putExtra("ins_start_long", getDateOfInsuranceStart());
                 Log.d("GetDateOfInsurance", "" + getDateOfInsuranceStart());
-
-                intent.putExtra("ins_stop_long", 100000L); //DUMMY
-
+                intent.putExtra("ins_stop_long", calculateStopLong(getDateOfInsuranceStart(), insuranceDuration));
                 Log.d("getDateOfTechnical", "" + getDateOfTechnicalStart());
-
                 intent.putExtra("tech_start_long", getDateOfTechnicalStart());
-                intent.putExtra("tech_stop_long", 190000l); // DUMMY
+                intent.putExtra("tech_stop_long", calculateStopLong(getDateOfTechnicalStart(), technicalDuration));
                 setResult(RESULT_OK, intent);
                 finish();
             }
         });
+
 
         insuranceButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -112,9 +126,8 @@ public class AddCarActivity extends FragmentActivity {
 
             }
         });
-
-
     }
+
 
     public void showDialogTechnical() {
         Log.d("Main Activity", " Show Dialog method called!!!");
