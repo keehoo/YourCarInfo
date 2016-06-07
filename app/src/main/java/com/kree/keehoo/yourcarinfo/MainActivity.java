@@ -10,6 +10,10 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
+
 import java.util.List;
 
 
@@ -98,15 +102,18 @@ public class MainActivity extends AppCompatActivity {
         if (requestCode == 1) {
             if (resultCode == Activity.RESULT_OK) {
                 String carBrand = data.getStringExtra("carBrand");
+                DateTimeFormatter fmt = DateTimeFormat.forPattern("d MMMM, yyyy");
                 Log.d("New car    ", carBrand);
                 String carModel = data.getStringExtra("carModel");
                 Log.d("New car model   ", carModel);
                 String regNum = data.getStringExtra("regNum");
                 Log.d("New car regNum      ", regNum);
-                long ins_start_long = data.getLongExtra("ins_start_long", 10L);
-                long ins_stop_long = data.getLongExtra("ins_stop_long", 20L);
-                long tech_start_long = data.getLongExtra("tech_start_long", 30L);
-                long tech_stop_long = data.getLongExtra("tech_stop_long", 40L);
+                Long ins_start_long = data.getLongExtra("ins_start_long", 10L);
+                Log.d("New car insurance start", "Insurance start = "+(new DateTime(ins_start_long)).toString(fmt));
+                Long ins_stop_long = data.getLongExtra("ins_stop_long", 20L);
+                Log.d("New car insurance end", "Insurance start = "+(new DateTime(ins_stop_long)).toString(fmt));
+                Long tech_start_long = data.getLongExtra("tech_start_long", 30L);
+                Long tech_stop_long = data.getLongExtra("tech_stop_long", 40L);
 
                 Car car = new Car();
                 car.setBrand(carBrand);

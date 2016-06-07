@@ -16,10 +16,14 @@ import android.widget.Toast;
 import net.danlew.android.joda.JodaTimeAndroid;
 
 import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 
 import java.util.Calendar;
 
 public class AddCarActivity extends FragmentActivity {
+
+    public static final String TAG = "AddCarActivity";
 
     public static final String INSURANCE = "insurance";
     public static final String SHARED_PREFS_NAME = "prefs";
@@ -36,23 +40,31 @@ public class AddCarActivity extends FragmentActivity {
     NumberPickerFragment fragNumber;
     Calendar now;
     SharedPreferences sharedPreferences;
-    long dateOfInsuranceStop;
-    long dateOfTechnicalStart;
+    Long dateOfInsuranceStop;
+    Long dateOfTechnicalStart;
+
+
     int technicalDuration;
-    long dateOfTechnicalStop;
-    long dateOfInsuranceStart;
+    Long dateOfTechnicalStop;
+    Long dateOfInsuranceStart;
+
+
     int insuranceDuration;
 
 
-    private long calculateStopLong(long insStart, int insuranceDuration) {
+    private Long calculateStopLong(Long insStart, int duration) {
 
-        if (insStart == 0 || insuranceDuration == 0) {
-            Log.d("Same nulle", "SAASDASD");
+        if (insStart == null && duration == 0) {
+            Log.d("Same nulle", ".............SAME NULLE>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+            Toast.makeText(AddCarActivity.this, "Proszę podać wszystkie dane", Toast.LENGTH_SHORT).show();
             finish();
         } else {
             DateTime dt = new DateTime(insStart);
-            dt.plusMonths(insuranceDuration);
-            return dt.getMillis();
+            DateTimeFormatter fmt = DateTimeFormat.forPattern("d MMMM, yyyy");
+            Log.d(TAG, "     DateTime(insStart) = " + dt.toString(fmt));
+            dt.plusMonths(duration);
+            Log.d(TAG, " DateTime(insStart) + number of months :" + duration + " should equals:     " + (new DateTime(dt.plusMonths(duration)).toString(fmt)));
+            return dt.plusMonths(duration).getMillis();
         }
         return 90L;
     }
@@ -87,10 +99,14 @@ public class AddCarActivity extends FragmentActivity {
                 intent.putExtra("regNum", regNum.getText().toString());
                 intent.putExtra("ins_start_long", getDateOfInsuranceStart());
                 Log.d("GetDateOfInsurance", "" + getDateOfInsuranceStart());
-                intent.putExtra("ins_stop_long", calculateStopLong(getDateOfInsuranceStart(), insuranceDuration));
+                Log.d("Insurance Duration", "Insurance duration   :   " + insuranceDuration);
+                intent.putExtra("ins_stop_long", (calculateStopLong(getDateOfInsuranceStart(), insuranceDuration)));
+                dateOfInsuranceStop = calculateStopLong(getDateOfInsuranceStart(), insuranceDuration);
                 Log.d("getDateOfTechnical", "" + getDateOfTechnicalStart());
                 intent.putExtra("tech_start_long", getDateOfTechnicalStart());
                 intent.putExtra("tech_stop_long", calculateStopLong(getDateOfTechnicalStart(), technicalDuration));
+                Log.d("Technical Duration", "Technical Duration .... " + technicalDuration);
+                Log.d("Date of techStart", "Date of Technical Start ..." + (new DateTime(getDateOfTechnicalStart()).toString()));
                 setResult(RESULT_OK, intent);
                 finish();
             }
@@ -191,8 +207,23 @@ public class AddCarActivity extends FragmentActivity {
         void updateChangeDate(int number);
     }
 
+    public int getTechnicalDuration() {
+        return technicalDuration;
+    }
 
-    public long getDateOfInsuranceStart() {
+    public void setTechnicalDuration(int technicalDuration) {
+        this.technicalDuration = technicalDuration;
+    }
+
+    public int getInsuranceDuration() {
+        return insuranceDuration;
+    }
+
+    public void setInsuranceDuration(int insuranceDuration) {
+        this.insuranceDuration = insuranceDuration;
+    }
+
+    public Long getDateOfInsuranceStart() {
         return dateOfInsuranceStart;
     }
 
@@ -201,7 +232,7 @@ public class AddCarActivity extends FragmentActivity {
     }
 
 
-    public long getDateOfTechnicalStart() {
+    public Long getDateOfTechnicalStart() {
         return dateOfTechnicalStart;
     }
 
@@ -210,18 +241,20 @@ public class AddCarActivity extends FragmentActivity {
     }
 
     public void onUserSelectValue(int selectedValue) {
-
-        // TODO add your implementation.
-        Toast.makeText(getBaseContext(), "" + selectedValue, Toast.LENGTH_LONG).show();
         int insurance = sharedPreferences.getInt(INSURANCE, 90);
+        Toast.makeText(AddCarActivity.this, "Selected Value: " + selectedValue, Toast.LENGTH_LONG).show();
+
         if (insurance == 10) {
-            insuranceDuration = selectedValue;
-            Log.d("onUserSelectValue", "wartosc --INSURANCE-- zczytana z shared prefs = " + sharedPreferences.getInt(INSURANCE, 90));
+            setInsuranceDuration(selectedValue);
+            Log.d("onUserSelectValue", selectedValue + "wartosc --INSURANCE-- zczytana z shared prefs = " + sharedPreferences.getInt(INSURANCE, 90));
             Log.d("onUserSelectValue", "wartosc ---insuranceDuration--- ustawoina na " + insuranceDuration);
+
         }
-        if (insurance == 20) technicalDuration = selectedValue;
-        Log.d("onUserSelectValue", "wartosc --INSURANCE-- zczytana z shared prefs = " + sharedPreferences.getInt(INSURANCE, 90));
-        Log.d("onUserSelectValue", "wartosc ---technicalDuration--- ustawoina na " + technicalDuration);
+        if (insurance == 20) {
+            setTechnicalDuration(selectedValue);
+            Log.d("onUserSelectValue", "wartosc --INSURANCE-- zczytana z shared prefs = " + sharedPreferences.getInt(INSURANCE, 90));
+            Log.d("onUserSelectValue", "wartosc ---technicalDuration--- ustawoina na " + technicalDuration);
+        }
 
         if (insurance == 90) {
             Log.d("AddCarActivity", "method onUserSelectValue w shared prefs jest wartosc 90, czyli defaultowa!!!!!!");
