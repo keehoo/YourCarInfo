@@ -8,7 +8,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.kree.keehoo.yourcarinfo.DisplayCarInfoActivity">
+    tools:context=".Activities.DisplayCarInfoActivity">
 
     <TextView
         android:id="@+id/display_car_name"
@@ -225,6 +225,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="edit"
+        android:id="@+id/edit_button_id"
         android:layout_toRightOf="@id/displ_button_delete_id"
         android:layout_alignParentBottom="true"
         />

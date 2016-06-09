@@ -1,4 +1,4 @@
-package com.kree.keehoo.yourcarinfo;
+package com.kree.keehoo.yourcarinfo.DialogFragments;
 
 
 import android.app.DialogFragment;
@@ -15,16 +15,18 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.NumberPicker;
 
+import com.kree.keehoo.yourcarinfo.Activities.AddCarActivity;
+
 /**
  * A simple {@link Fragment} subclass.
  */
 public class NumberPickerFragment extends DialogFragment {
 
     static Context mContext;
-    static AddCarActivity.NumberPickerFragmentListener mListener;
+    //static AddCarActivity.NumberPickerFragmentListener mListener;
     public static final String TAG = "NumberPickerFragmentDialog";
     static int number;
-    int insurance;
+    //int insurance;
     public SharedPreferences sharedPreferences;
 
    /* public NumberPickerFragment() {

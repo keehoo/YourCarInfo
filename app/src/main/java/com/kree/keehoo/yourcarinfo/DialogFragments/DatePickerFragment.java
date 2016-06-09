@@ -1,4 +1,4 @@
-package com.kree.keehoo.yourcarinfo;
+package com.kree.keehoo.yourcarinfo.DialogFragments;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
@@ -7,6 +7,8 @@ import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.DatePicker;
+
+import com.kree.keehoo.yourcarinfo.Activities.AddCarActivity;
 
 import java.util.Calendar;
 

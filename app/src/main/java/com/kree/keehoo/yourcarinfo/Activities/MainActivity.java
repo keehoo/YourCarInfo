@@ -1,4 +1,4 @@
-package com.kree.keehoo.yourcarinfo;
+package com.kree.keehoo.yourcarinfo.Activities;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -9,6 +9,13 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import com.kree.keehoo.yourcarinfo.DaoGeneratedFiles.Car;
+import com.kree.keehoo.yourcarinfo.DaoGeneratedFiles.CarApplication;
+import com.kree.keehoo.yourcarinfo.DaoGeneratedFiles.CarDao;
+import com.kree.keehoo.yourcarinfo.DaoGeneratedFiles.DaoSession;
+import com.kree.keehoo.yourcarinfo.RecyclerViewAdapters.MainActivityAdapter;
+import com.kree.keehoo.yourcarinfo.R;
 
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;

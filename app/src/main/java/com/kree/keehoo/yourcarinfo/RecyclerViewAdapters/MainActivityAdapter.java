@@ -1,4 +1,4 @@
-package com.kree.keehoo.yourcarinfo;
+package com.kree.keehoo.yourcarinfo.RecyclerViewAdapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -7,10 +7,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.kree.keehoo.yourcarinfo.DaoGeneratedFiles.Car;
+import com.kree.keehoo.yourcarinfo.R;
+
 import net.danlew.android.joda.JodaTimeAndroid;
 
 import org.joda.time.DateTime;
-import org.joda.time.LocalDate;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 

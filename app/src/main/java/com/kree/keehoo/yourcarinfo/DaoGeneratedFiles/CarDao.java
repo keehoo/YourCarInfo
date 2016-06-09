@@ -1,4 +1,4 @@
-package com.kree.keehoo.yourcarinfo;
+package com.kree.keehoo.yourcarinfo.DaoGeneratedFiles;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;

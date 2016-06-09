@@ -1,4 +1,4 @@
-package com.kree.keehoo.yourcarinfo;
+package com.kree.keehoo.yourcarinfo.Activities;
 
 import android.app.FragmentTransaction;
 import android.content.Context;
@@ -12,6 +12,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
+
+import com.kree.keehoo.yourcarinfo.DialogFragments.DatePickerFragment;
+import com.kree.keehoo.yourcarinfo.DialogFragments.NumberPickerFragment;
+import com.kree.keehoo.yourcarinfo.R;
 
 import net.danlew.android.joda.JodaTimeAndroid;
 
@@ -203,9 +207,9 @@ public class AddCarActivity extends FragmentActivity {
         void updateChangedDate(int year, int month, int day);
     }
 
-    public interface NumberPickerFragmentListener {
-        void updateChangeDate(int number);
-    }
+   /* public interface NumberPickerFragmentListener {
+        //void updateChangeDate(int number);
+    }*/
 
     public int getTechnicalDuration() {
         return technicalDuration;
