@@ -36,7 +36,7 @@ public class NumberPickerFragment extends DialogFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
+        Log.d("onCreateView", "onCreateView w Fragmencie NumberPicker Fragment");
         sharedPreferences = getActivity().getSharedPreferences(AddCarActivity.SHARED_PREFS_NAME, Context.MODE_PRIVATE);
 
         //TextView textView = new TextView(getActivity());

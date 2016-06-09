@@ -47,7 +47,6 @@ public class DisplayCarInfoActivity extends AppCompatActivity {
 
     private long currentDaoId;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -138,28 +137,32 @@ public class DisplayCarInfoActivity extends AppCompatActivity {
 
     }
 
+
+    private void allowEdit2(View view) {
+
+    }
+
+
     private void allowEdit() {
         carName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO: add code here
+
                 Toast.makeText(DisplayCarInfoActivity.this, "Car name clicked: ", Toast.LENGTH_SHORT).show();
-
-                    // Create an instance of the dialog fragment and show it
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
-                fragString = EditFieldFragment.newInstance(DisplayCarInfoActivity.this, 10);
-
-
-                // 10 - for insurance, 20 for technical;
-                fragString.show(ft, "NumberPickerFragment");
+                fragString = EditFieldFragment.newInstance(DisplayCarInfoActivity.this, "carBrand");
+                fragString.show(ft, "carBrand");
+                declineEdit();
             }
         });
 
         carModel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO: add code here
 
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                fragString = EditFieldFragment.newInstance(DisplayCarInfoActivity.this, "carBrand");
+                fragString.show(ft, "carModel");
                 declineEdit();
             }
         });
@@ -167,8 +170,9 @@ public class DisplayCarInfoActivity extends AppCompatActivity {
         carRegNum.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO: add code here;
-
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                fragString = EditFieldFragment.newInstance(DisplayCarInfoActivity.this, "carBrand");
+                fragString.show(ft, "carRegNum");
                 declineEdit();
             }
         });
@@ -176,7 +180,7 @@ public class DisplayCarInfoActivity extends AppCompatActivity {
         countDownInsurance.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO: add dialogfragment here
+                // TODO: add dialogfragment here21poi uytr
 
                 declineEdit();
             }
@@ -192,7 +196,6 @@ public class DisplayCarInfoActivity extends AppCompatActivity {
         });
 
 
-
     }
 
 
@@ -200,15 +203,30 @@ public class DisplayCarInfoActivity extends AppCompatActivity {
         public void doSomething();
     }*/
 
-    public void onUserSelectValue(String text) {
-
-
-        Toast.makeText(DisplayCarInfoActivity.this, "Wybrano.....  "+text, Toast.LENGTH_SHORT).show();
-
+    public void onUserSelectValue(String text, String string) {
+        Toast.makeText(DisplayCarInfoActivity.this, "Wybrano.....  " + text + "A dodatkowo przekazano argument...." + string, Toast.LENGTH_SHORT).show();
+        updateInformation(text, string);  // TODO: These variables names MUST be renamed and refactored.!!
     }
 
+    public void updateInformation(String newValue, String currentFieldTag) {
 
-    private void updateDataBase(String updated)
+
+        if (currentFieldTag == "carBrand") {
+            currentObject.setBrand(newValue);
+
+            Log.d(p, "Current Object Brand value:  "+currentObject.getBrand());
+            CarDao carDao = initializeDaoSession();
+            carDao.insertOrReplace(currentObject);
+            carName.setText(currentObject.getBrand());
+        }
+        if (currentFieldTag == "carModel") {
+            currentObject.setModel(newValue);
+        }
+        if (currentFieldTag == "carRegNum") {
+            currentObject.setRegNum(newValue);
+        }
+
+    }
 
 
 }

@@ -38,13 +38,15 @@ public class EditFieldFragment extends DialogFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
+        Log.d("asdasd", "asdasdas");
         //sharedPreferences = getActivity().getSharedPreferences(AddCarActivity.SHARED_PREFS_NAME, Context.MODE_PRIVATE);
 
         //TextView textView = new TextView(getActivity());
         //textView.setText("TEXT");
         //textView.setTextColor(124);
 
+
+        final String string = getArguments().getString("title");
         LinearLayout linLayoutH =
                 new LinearLayout(getActivity());
         LinearLayout.LayoutParams params =
@@ -69,7 +71,8 @@ public class EditFieldFragment extends DialogFragment {
                     public void onClick(View view) {
                         text = editText.getText().toString();
                         DisplayCarInfoActivity callingActivity = (DisplayCarInfoActivity) getActivity();
-                        callingActivity.onUserSelectValue(text);
+
+                        callingActivity.onUserSelectValue(text, string);
                         dismiss();
                     }
                 });
@@ -82,7 +85,7 @@ public class EditFieldFragment extends DialogFragment {
         return linLayoutV;
     }
 
-    public static EditFieldFragment newInstance(Context context, int insurance) {
+    public static EditFieldFragment newInstance(Context context, String prop) {
         EditFieldFragment dialog = new EditFieldFragment();
         Log.d("NumberPickerFragment", "New instance method called inside the NumberPickerFragment");
         mContext = context;
@@ -93,8 +96,8 @@ public class EditFieldFragment extends DialogFragment {
 
         /*I dont really see the purpose of the below*/
         Bundle args = new Bundle();
-        args.putString("title", "Set Date");
-        args.putInt("insurance", insurance);
+        args.putString("title", prop);
+        //args.putInt("insurance", insurance);
         dialog.setArguments(args);//setArguments can only be called before fragment is attached to an activity, so right after the fragment is created
         return dialog;
     }
