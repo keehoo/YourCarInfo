@@ -171,7 +171,7 @@ public class DisplayCarInfoActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
-                fragString = EditFieldFragment.newInstance(DisplayCarInfoActivity.this, "carBrand");
+                fragString = EditFieldFragment.newInstance(DisplayCarInfoActivity.this, "carRegNum");
                 fragString.show(ft, "carRegNum");
                 declineEdit();
             }
@@ -205,7 +205,7 @@ public class DisplayCarInfoActivity extends AppCompatActivity {
 
     public void onUserSelectValue(String text, String string) {
         Toast.makeText(DisplayCarInfoActivity.this, "Wybrano.....  " + text + "A dodatkowo przekazano argument...." + string, Toast.LENGTH_SHORT).show();
-        updateInformation(text, string);  // TODO: These variables names MUST be renamed and refactored.!!
+        updateInformation(text, string);  // TODO: These variables names MUST be renamed and refactored.!! This method is pointlless anyways...
     }
 
     public void updateInformation(String newValue, String currentFieldTag) {
@@ -214,19 +214,24 @@ public class DisplayCarInfoActivity extends AppCompatActivity {
         if (currentFieldTag == "carBrand") {
             currentObject.setBrand(newValue);
 
-            Log.d(p, "Current Object Brand value:  "+currentObject.getBrand());
+            Log.d(p, "Current Object Brand value:  " + currentObject.getBrand());
             CarDao carDao = initializeDaoSession();
             carDao.insertOrReplace(currentObject);
             carName.setText(currentObject.getBrand());
         }
         if (currentFieldTag == "carModel") {
             currentObject.setModel(newValue);
+            Log.d(p, "Current Object Brand value:  " + currentObject.getModel());
+            CarDao carDao = initializeDaoSession();
+            carDao.insertOrReplace(currentObject);
+            carModel.setText(currentObject.getBrand());
         }
         if (currentFieldTag == "carRegNum") {
             currentObject.setRegNum(newValue);
+            Log.d(p, "Current Object Brand value:  " + currentObject.getRegNum());
+            CarDao carDao = initializeDaoSession();
+            carDao.insertOrReplace(currentObject);
+            carRegNum.setText(currentObject.getRegNum());
         }
-
     }
-
-
 }
