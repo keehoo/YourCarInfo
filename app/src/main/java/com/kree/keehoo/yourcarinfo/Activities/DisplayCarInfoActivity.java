@@ -17,6 +17,7 @@ import com.kree.keehoo.yourcarinfo.DaoGeneratedFiles.Car;
 import com.kree.keehoo.yourcarinfo.DaoGeneratedFiles.CarApplication;
 import com.kree.keehoo.yourcarinfo.DaoGeneratedFiles.CarDao;
 import com.kree.keehoo.yourcarinfo.DaoGeneratedFiles.DaoSession;
+import com.kree.keehoo.yourcarinfo.DialogFragments.EditDatesAndDurationFragment;
 import com.kree.keehoo.yourcarinfo.DialogFragments.EditFieldFragment;
 import com.kree.keehoo.yourcarinfo.DialogFragments.NumberPickerFragment;
 import com.kree.keehoo.yourcarinfo.R;
@@ -161,7 +162,7 @@ public class DisplayCarInfoActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
-                fragString = EditFieldFragment.newInstance(DisplayCarInfoActivity.this, "carBrand");
+                fragString = EditFieldFragment.newInstance(DisplayCarInfoActivity.this, "carModel");
                 fragString.show(ft, "carModel");
                 declineEdit();
             }
@@ -172,6 +173,8 @@ public class DisplayCarInfoActivity extends AppCompatActivity {
             public void onClick(View v) {
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
                 fragString = EditFieldFragment.newInstance(DisplayCarInfoActivity.this, "carRegNum");
+
+                /// this argument assigning should most probably be done with hashtag or hashcde etc... need to investigate further with these.
                 fragString.show(ft, "carRegNum");
                 declineEdit();
             }
@@ -180,8 +183,11 @@ public class DisplayCarInfoActivity extends AppCompatActivity {
         countDownInsurance.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO: add dialogfragment here21poi uytr
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                EditDatesAndDurationFragment fragString = EditDatesAndDurationFragment.newInstance(DisplayCarInfoActivity.this, "insuranceDateStart");
 
+                /// this argument assigning should most probably be done with hashtag or hashcde etc... need to investigate further with these.
+                fragString.show(ft, "insuranceDateStart");
                 declineEdit();
             }
         });
@@ -202,6 +208,7 @@ public class DisplayCarInfoActivity extends AppCompatActivity {
    /* public interface EditFieldListener() {
         public void doSomething();
     }*/
+
 
     public void onUserSelectValue(String text, String string) {
         Toast.makeText(DisplayCarInfoActivity.this, "Wybrano.....  " + text + "A dodatkowo przekazano argument...." + string, Toast.LENGTH_SHORT).show();
@@ -233,5 +240,10 @@ public class DisplayCarInfoActivity extends AppCompatActivity {
             carDao.insertOrReplace(currentObject);
             carRegNum.setText(currentObject.getRegNum());
         }
+    }
+
+    public void onUserSelectValueDates(Long date, int durationMonths) {
+
+        Toast.makeText(DisplayCarInfoActivity.this, "Long przesłany: "+ date+ " |||||  int przesłany:" + durationMonths, Toast.LENGTH_SHORT).show();
     }
 }
