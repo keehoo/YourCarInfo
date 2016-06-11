@@ -2,10 +2,7 @@ package com.kree.keehoo.yourcarinfo.Activities;
 
 import android.app.FragmentTransaction;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -19,7 +16,6 @@ import com.kree.keehoo.yourcarinfo.DaoGeneratedFiles.CarDao;
 import com.kree.keehoo.yourcarinfo.DaoGeneratedFiles.DaoSession;
 import com.kree.keehoo.yourcarinfo.DialogFragments.EditDatesAndDurationFragment;
 import com.kree.keehoo.yourcarinfo.DialogFragments.EditFieldFragment;
-import com.kree.keehoo.yourcarinfo.DialogFragments.NumberPickerFragment;
 import com.kree.keehoo.yourcarinfo.R;
 
 import org.joda.time.DateTime;
@@ -30,14 +26,12 @@ import cn.iwgang.countdownview.CountdownView;
 
 public class DisplayCarInfoActivity extends AppCompatActivity {
 
-    private static String p = "  DisplayCarActivityInfo  ";
-
+    private static final String p = "  DisplayCarActivityInfo  ";
     private Button deleteButton;
     private Button editButton;
     private CountdownView countDownInsurance;
     private CountdownView countDownTechnical;
-    EditFieldFragment fragString;
-
+    private EditFieldFragment fragString;
     private TextView textViewInsuranceStart;
     private TextView textViewTechnicalStart;
     private TextView carName;
@@ -45,7 +39,6 @@ public class DisplayCarInfoActivity extends AppCompatActivity {
     private TextView carRegNum;
     private CarDao carDao;
     private Car currentObject;
-
     private long currentDaoId;
 
     @Override
@@ -88,7 +81,6 @@ public class DisplayCarInfoActivity extends AppCompatActivity {
 
 
         Log.d("Display car acti ", "  !!!!!!!!!Powinno sie uruchomic display car activity!!!!!!!!!!!!!!");
-
 
 
         countDownInsurance.start(currentObject.getDateOfInsuranceEnd() - DateTime.now().getMillis());
@@ -138,12 +130,6 @@ public class DisplayCarInfoActivity extends AppCompatActivity {
         countDownInsurance.setOnClickListener(null);
 
     }
-
-
-    private void allowEdit2(View view) {
-
-    }
-
 
     private void allowEdit() {
 
@@ -207,12 +193,6 @@ public class DisplayCarInfoActivity extends AppCompatActivity {
 
 
     }
-
-
-   /* public interface EditFieldListener() {
-        public void doSomething();
-    }*/
-
 
     public void onUserSelectValue(String text, String string) {
         Toast.makeText(DisplayCarInfoActivity.this, "Wybrano.....  " + text + "A dodatkowo przekazano argument...." + string, Toast.LENGTH_SHORT).show();

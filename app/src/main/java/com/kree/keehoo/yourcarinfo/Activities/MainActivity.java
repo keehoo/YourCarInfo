@@ -14,8 +14,8 @@ import com.kree.keehoo.yourcarinfo.DaoGeneratedFiles.Car;
 import com.kree.keehoo.yourcarinfo.DaoGeneratedFiles.CarApplication;
 import com.kree.keehoo.yourcarinfo.DaoGeneratedFiles.CarDao;
 import com.kree.keehoo.yourcarinfo.DaoGeneratedFiles.DaoSession;
-import com.kree.keehoo.yourcarinfo.RecyclerViewAdapters.MainActivityAdapter;
 import com.kree.keehoo.yourcarinfo.R;
+import com.kree.keehoo.yourcarinfo.RecyclerViewAdapters.MainActivityAdapter;
 
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
@@ -23,20 +23,17 @@ import org.joda.time.format.DateTimeFormatter;
 
 import java.util.List;
 
-
 public class MainActivity extends AppCompatActivity {
 
     public RecyclerView recyclerViewOfTheCarList; // RECYCLER VIEW!!!!!
     public MainActivityAdapter adapter;
     public List<Car> carList;
 
-
     public CarDao initializeDaoSession() {
         DaoSession daoSession = ((CarApplication) getApplicationContext()).getDaoSession();
         CarDao carDao = daoSession.getCarDao();
         return carDao;
     }
-
 
     public void allowClicking() {
         adapter.setOnClickListener(new MainActivityAdapter.OnItemClickListener() {
@@ -61,33 +58,18 @@ public class MainActivity extends AppCompatActivity {
         Log.d("MainActivity", "onCREATE    " + carList.size());
         recyclerViewOfTheCarList = (RecyclerView) findViewById(R.id.main_activity_recyclerView);
         recyclerViewOfTheCarList.setLayoutManager(new LinearLayoutManager(this));
-
         adapter = new MainActivityAdapter(this, carList);
-
         allowClicking();
         recyclerViewOfTheCarList.setAdapter(adapter);
         Log.d("recyclerViewStrt method", "RecyclerView started with " + recyclerViewOfTheCarList + " and list of " + carList.toString());
         Log.d("MainActivity", "Rozmiar Listy samochodow :  " + carList.size() + " Hash code : " + carList.hashCode());
     }
 
-
-    /*public void addDummyCars(DaoSession daoSession) {
-
-        Car car = new Car();
-        car.setBrand("Ford---PUMA");
-        car.setModel("Focus");
-        car.setRegNum("GD481HJ");
-        CarDao carDao = daoSession.getCarDao();
-        carDao.insertOrReplace(car);
-    }*/
-
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu, menu);
         return true;
     }
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
