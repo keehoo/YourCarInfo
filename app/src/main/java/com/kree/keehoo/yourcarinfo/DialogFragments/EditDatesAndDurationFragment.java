@@ -22,11 +22,12 @@ import java.util.Calendar;
 /**
  * Created by keehoo on 09.06.2016.
  */
-public class EditDatesAndDurationFragment extends DialogFragment {
+public class EditDatesAndDurationFragment extends DialogFragment implements DatePicker.OnDateChangedListener {
 
     public static Context mContext;
     private Long date;
     private int durationMonths;
+    DatePicker datePicker;
 
     @Nullable
     @Override
@@ -39,34 +40,32 @@ public class EditDatesAndDurationFragment extends DialogFragment {
                         LinearLayout.LayoutParams.WRAP_CONTENT,
                         LinearLayout.LayoutParams.WRAP_CONTENT);
         linLayoutH.setLayoutParams(params);
-       final DatePicker datePicker = new DatePicker(getActivity());
-
-
+        final DatePicker datePicker = new DatePicker(getActivity());
         linLayoutH.addView(datePicker);
         LinearLayout linLayoutV =
                 new LinearLayout(getActivity());
         linLayoutV.setOrientation(LinearLayout.VERTICAL);
         linLayoutV.addView(linLayoutH);
+        final Button dateButtom = new Button(getActivity());
+        linLayoutV.addView(dateButtom);
+        dateButtom.setText("Nowa data");
+        final Button okButton = new Button(getActivity());
+        okButton.setVisibility(View.GONE);
 
-        Button okButton = new Button(getActivity());
         final NumberPicker numberPicker
-                 = new NumberPicker(getActivity());
+                = new NumberPicker(getActivity());
         numberPicker.setMaxValue(24);
         numberPicker.setMinValue(0);
+        numberPicker.setVisibility(View.GONE);
         linLayoutV.addView(numberPicker);
-
 
         okButton.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         durationMonths = numberPicker.getValue();
-                        Calendar calendar = Calendar.getInstance();
-                        calendar.set(datePicker.getYear(), datePicker.getMonth(), datePicker.getDayOfMonth());
-                        date = calendar.getTimeInMillis();
                         DisplayCarInfoActivity callingActivity = (DisplayCarInfoActivity) getActivity();
-
-                        callingActivity.onUserSelectValueDates(date, durationMonths);
+                        callingActivity.onUserSelectValueDates(date, durationMonths, string);
                         dismiss();
                     }
                 });
@@ -76,6 +75,20 @@ public class EditDatesAndDurationFragment extends DialogFragment {
         okButton.setText("Done");
 
         linLayoutV.addView(okButton);
+
+        dateButtom.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Calendar calendar = Calendar.getInstance();
+                calendar.set(datePicker.getYear(), datePicker.getMonth(), datePicker.getDayOfMonth());
+                date = calendar.getTimeInMillis();
+                datePicker.setVisibility(View.GONE);
+                dateButtom.setVisibility(View.GONE);
+                okButton.setVisibility(View.VISIBLE);
+                numberPicker.setVisibility(View.VISIBLE);
+
+            }
+        });
         return linLayoutV;
     }
 
@@ -87,5 +100,10 @@ public class EditDatesAndDurationFragment extends DialogFragment {
         args.putString("title", prop);
         dialog.setArguments(args);
         return dialog;
+    }
+
+    @Override
+    public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+        view.setVisibility(View.GONE);
     }
 }

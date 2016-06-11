@@ -90,6 +90,7 @@ public class DisplayCarInfoActivity extends AppCompatActivity {
         Log.d("Display car acti ", "  !!!!!!!!!Powinno sie uruchomic display car activity!!!!!!!!!!!!!!");
 
 
+
         countDownInsurance.start(currentObject.getDateOfInsuranceEnd() - DateTime.now().getMillis());
         countDownTechnical.start(currentObject.getDateOfTechEnd() - DateTime.now().getMillis());
 
@@ -145,6 +146,9 @@ public class DisplayCarInfoActivity extends AppCompatActivity {
 
 
     private void allowEdit() {
+
+
+        Toast.makeText(DisplayCarInfoActivity.this, "Klikanie dozwolone", Toast.LENGTH_SHORT).show();
         carName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -185,7 +189,6 @@ public class DisplayCarInfoActivity extends AppCompatActivity {
             public void onClick(View v) {
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
                 EditDatesAndDurationFragment fragString = EditDatesAndDurationFragment.newInstance(DisplayCarInfoActivity.this, "insuranceDateStart");
-
                 /// this argument assigning should most probably be done with hashtag or hashcde etc... need to investigate further with these.
                 fragString.show(ft, "insuranceDateStart");
                 declineEdit();
@@ -195,8 +198,9 @@ public class DisplayCarInfoActivity extends AppCompatActivity {
         countDownTechnical.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO: add dialog fragment here to edit and modify the date of insurance and duration.
-
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                EditDatesAndDurationFragment fragString = EditDatesAndDurationFragment.newInstance(DisplayCarInfoActivity.this, "technicalDateStart");
+                fragString.show(ft, "technicalDateStart");
                 declineEdit();
             }
         });
@@ -242,8 +246,27 @@ public class DisplayCarInfoActivity extends AppCompatActivity {
         }
     }
 
-    public void onUserSelectValueDates(Long date, int durationMonths) {
+    public void onUserSelectValueDates(Long date, int durationMonths, String prop) {
 
-        Toast.makeText(DisplayCarInfoActivity.this, "Long przesłany: "+ date+ " |||||  int przesłany:" + durationMonths, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(DisplayCarInfoActivity.this, "Long przesłany: " + date + " |||||  int przesłany:" + durationMonths, Toast.LENGTH_SHORT).show();
+        if (prop == "insuranceDateStart") {
+            currentObject.setDateOfInsuranceStart(date);
+            DateTime endDate = (new DateTime(date)).plusMonths(durationMonths);
+            currentObject.setDateOfInsuranceEnd(endDate.getMillis());
+            CarDao cd = initializeDaoSession();
+            cd.insertOrReplace(currentObject);
+            countDownInsurance.start(currentObject.getDateOfInsuranceEnd() - DateTime.now().getMillis());
+        }
+
+        if (prop == "technicalDateStart") {
+            currentObject.setDateOfTechStart(date);
+            DateTime endDate = (new DateTime(date)).plusMonths(durationMonths);
+            currentObject.setDateOfTechEnd(endDate.getMillis());
+            CarDao cd = initializeDaoSession();
+            cd.insertOrReplace(currentObject);
+            countDownTechnical.start(currentObject.getDateOfInsuranceEnd() - DateTime.now().getMillis());
+        }
+
+
     }
 }

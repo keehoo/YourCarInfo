@@ -31,7 +31,6 @@ public class MainActivity extends AppCompatActivity {
     public List<Car> carList;
 
 
-
     public CarDao initializeDaoSession() {
         DaoSession daoSession = ((CarApplication) getApplicationContext()).getDaoSession();
         CarDao carDao = daoSession.getCarDao();
@@ -53,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
         recyclerViewOfTheCarList.setAdapter(adapter);
         Log.d("recyclerViewStrt method", "RecyclerView started with " + recyclerViewOfTheCarList + " and list of " + carList.toString());
         Log.d("MainActivity", "Rozmiar Listy samochodow :  " + carList.size() + " Hash code : " + carList.hashCode());
-}
+    }
 
 
     /*public void addDummyCars(DaoSession daoSession) {
@@ -97,6 +97,11 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
 
+        if (item.getItemId() == R.id.delete_all) {
+            CarDao carDao = initializeDaoSession();
+            carDao.deleteAll();
+        }
+
         return super.onOptionsItemSelected(item);
     }
 
@@ -116,9 +121,9 @@ public class MainActivity extends AppCompatActivity {
                 String regNum = data.getStringExtra("regNum");
                 Log.d("New car regNum      ", regNum);
                 Long ins_start_long = data.getLongExtra("ins_start_long", 10L);
-                Log.d("New car insurance start", "Insurance start = "+(new DateTime(ins_start_long)).toString(fmt));
+                Log.d("New car insurance start", "Insurance start = " + (new DateTime(ins_start_long)).toString(fmt));
                 Long ins_stop_long = data.getLongExtra("ins_stop_long", 20L);
-                Log.d("New car insurance end", "Insurance start = "+(new DateTime(ins_stop_long)).toString(fmt));
+                Log.d("New car insurance end", "Insurance start = " + (new DateTime(ins_stop_long)).toString(fmt));
                 Long tech_start_long = data.getLongExtra("tech_start_long", 30L);
                 Long tech_stop_long = data.getLongExtra("tech_stop_long", 40L);
 
