@@ -20,11 +20,14 @@
         <activity android:name=".Activities.DisplayCarInfoActivity" />
         <activity android:name=".Activities.ReminderActivity" />
 
-        <receiver
-            android:name=".BroadCastReceivers.MyReceiver"
-            android:enabled="true"
-            android:exported="true" />
+        <receiver android:name=".BroadCastReceivers.MyReceiver">
+            <intent-filter>
+                <action android:name="${applicationId}.BROADCAST_ACTION" />
+            </intent-filter>
 
+            android:enabled="true"
+            android:exported="true"
+        </receiver>
         <service
             android:name=".Services.NotificationService"
             android:exported="false"></service>

@@ -116,8 +116,9 @@ public class DisplayCarInfoActivity extends AppCompatActivity {
         reminderButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent();
-
+                Intent intent = new Intent(DisplayCarInfoActivity.this, ReminderActivity.class);
+                intent.putExtra("currentID", currentDaoId);
+                startActivity(intent);
             }
         });
     }
