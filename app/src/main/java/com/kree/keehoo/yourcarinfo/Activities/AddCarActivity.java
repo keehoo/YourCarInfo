@@ -46,13 +46,9 @@ public class AddCarActivity extends FragmentActivity {
     SharedPreferences sharedPreferences;
     Long dateOfInsuranceStop;
     Long dateOfTechnicalStart;
-
-
     int technicalDuration;
     Long dateOfTechnicalStop;
     Long dateOfInsuranceStart;
-
-
     int insuranceDuration;
 
 
@@ -72,7 +68,6 @@ public class AddCarActivity extends FragmentActivity {
         }
         return 90L;
     }
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -166,7 +161,6 @@ public class AddCarActivity extends FragmentActivity {
         frag.show(ft, "DateDialogFragment");
     }
 
-
     public void showNumberPicker() {
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         fragNumber = NumberPickerFragment.newInstance(this, 10);
@@ -203,13 +197,8 @@ public class AddCarActivity extends FragmentActivity {
     }
 
     public interface DateDialogFragmentListener {
-        //this interface is a listener between the Date Dialog fragment and the activity to update the buttons date
         void updateChangedDate(int year, int month, int day);
     }
-
-   /* public interface NumberPickerFragmentListener {
-        //void updateChangeDate(int number);
-    }*/
 
     public int getTechnicalDuration() {
         return technicalDuration;

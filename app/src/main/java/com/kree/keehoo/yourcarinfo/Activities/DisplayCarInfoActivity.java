@@ -29,6 +29,7 @@ public class DisplayCarInfoActivity extends AppCompatActivity {
     private static final String p = "  DisplayCarActivityInfo  ";
     private Button deleteButton;
     private Button editButton;
+    private Button reminderButton;
     private CountdownView countDownInsurance;
     private CountdownView countDownTechnical;
     private EditFieldFragment fragString;
@@ -47,11 +48,7 @@ public class DisplayCarInfoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_display_car_info);
         carDao = initializeDaoSession();
         Intent intent = getIntent();
-        //carName.setText(intent.getStringExtra("car_name"));
         currentDaoId = intent.getLongExtra("car_id", 100000);  //TODO: Need to add exemption handling when the value is 100000;
-
-        Log.d(p, "current dao ID :  " + currentDaoId);
-        Log.d(p, "current object :  " + currentObject);
         textViewInsuranceStart = (TextView) findViewById(R.id.insurance_date_textView_id);
         textViewTechnicalStart = (TextView) findViewById(R.id.technical_date_textView_id);
         countDownTechnical = (CountdownView) findViewById(R.id.count_down_ins_id);
@@ -61,6 +58,7 @@ public class DisplayCarInfoActivity extends AppCompatActivity {
         carRegNum = (TextView) findViewById(R.id.insurance);
         deleteButton = (Button) findViewById(R.id.displ_button_delete_id);
         editButton = (Button) findViewById(R.id.edit_button_id);
+        reminderButton = (Button) findViewById(R.id.reminderButton_id);
         DateTimeFormatter fmt = DateTimeFormat.forPattern("d MMMM, yyyy");
 
 
@@ -111,6 +109,14 @@ public class DisplayCarInfoActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 allowEdit();
+
+            }
+        });
+
+        reminderButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
 
             }
         });

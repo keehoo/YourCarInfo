@@ -17,7 +17,17 @@
             </intent-filter>
         </activity>
         <activity android:name=".Activities.AddCarActivity" />
-        <activity android:name=".Activities.DisplayCarInfoActivity"></activity>
+        <activity android:name=".Activities.DisplayCarInfoActivity" />
+        <activity android:name=".Activities.ReminderActivity" />
+
+        <receiver
+            android:name=".BroadCastReceivers.MyReceiver"
+            android:enabled="true"
+            android:exported="true" />
+
+        <service
+            android:name=".Services.NotificationService"
+            android:exported="false"></service>
     </application>
 
 </manifest>

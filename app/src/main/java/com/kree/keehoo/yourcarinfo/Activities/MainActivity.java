@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.kree.keehoo.yourcarinfo.DaoGeneratedFiles.Car;
 import com.kree.keehoo.yourcarinfo.DaoGeneratedFiles.CarApplication;
@@ -58,6 +59,11 @@ public class MainActivity extends AppCompatActivity {
         Log.d("MainActivity", "onCREATE    " + carList.size());
         recyclerViewOfTheCarList = (RecyclerView) findViewById(R.id.main_activity_recyclerView);
         recyclerViewOfTheCarList.setLayoutManager(new LinearLayoutManager(this));
+        if (carList.size() == 0) {
+            Log.d("Main Activity", " car list equals zero!!!!");
+            Toast.makeText(MainActivity.this, "Proszę dodać samochody do listy", Toast.LENGTH_LONG).show();
+
+        }
         adapter = new MainActivityAdapter(this, carList);
         allowClicking();
         recyclerViewOfTheCarList.setAdapter(adapter);
@@ -82,6 +88,7 @@ public class MainActivity extends AppCompatActivity {
         if (item.getItemId() == R.id.delete_all) {
             CarDao carDao = initializeDaoSession();
             carDao.deleteAll();
+            recreate();  // NOT SURE WHETHER THIS IS THE RIGHT APPROACH TO RE-DRAW THE ACTIVITY / LIST ETC...
         }
 
         return super.onOptionsItemSelected(item);
