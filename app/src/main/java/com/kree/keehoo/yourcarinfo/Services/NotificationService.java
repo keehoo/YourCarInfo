@@ -36,6 +36,7 @@ public class NotificationService extends IntentService {
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .setDefaults(NotificationCompat.DEFAULT_ALL)
                 .setContentTitle(notificationText)
+                .setStyle(new NotificationCompat.BigTextStyle().bigText(notificationText))
                 .setTicker(notificationText)
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
                 .setAutoCancel(true).build();

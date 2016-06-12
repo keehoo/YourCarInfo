@@ -62,7 +62,6 @@ public class MainActivity extends AppCompatActivity {
         if (carList.size() == 0) {
             Log.d("Main Activity", " car list equals zero!!!!");
             Toast.makeText(MainActivity.this, "Proszę dodać samochody do listy", Toast.LENGTH_LONG).show();
-
         }
         adapter = new MainActivityAdapter(this, carList);
         allowClicking();

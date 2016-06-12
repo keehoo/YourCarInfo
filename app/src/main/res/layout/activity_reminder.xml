@@ -9,4 +9,10 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.kree.keehoo.yourcarinfo.Activities.ReminderActivity">
 
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="make dummy notification, with given hashcode"
+        android:id="@+id/schedule_notification_id"/>
 </RelativeLayout>

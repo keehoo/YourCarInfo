@@ -42,6 +42,7 @@ public class DisplayCarInfoActivity extends AppCompatActivity {
     private Car currentObject;
     private long currentDaoId;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,6 +61,7 @@ public class DisplayCarInfoActivity extends AppCompatActivity {
         editButton = (Button) findViewById(R.id.edit_button_id);
         reminderButton = (Button) findViewById(R.id.reminderButton_id);
         DateTimeFormatter fmt = DateTimeFormat.forPattern("d MMMM, yyyy");
+
 
 
         currentObject = carDao.load(currentDaoId);
