@@ -54,6 +54,7 @@ public class NumberPickerFragment extends DialogFragment {
                 new NumberPicker(getActivity());
         np.setMaxValue(24);
         np.setMinValue(0);
+        np.setValue(12);
         linLayoutH.addView(np);
         LinearLayout linLayoutV =
                 new LinearLayout(getActivity());

@@ -19,6 +19,8 @@ import com.kree.keehoo.yourcarinfo.DialogFragments.EditFieldFragment;
 import com.kree.keehoo.yourcarinfo.R;
 
 import org.joda.time.DateTime;
+import org.joda.time.Months;
+import org.joda.time.Period;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
@@ -30,6 +32,7 @@ public class DisplayCarInfoActivity extends AppCompatActivity {
     private Button deleteButton;
     private Button editButton;
     private Button reminderButton;
+    private Button facebookButton;
     private CountdownView countDownInsurance;
     private CountdownView countDownTechnical;
     private EditFieldFragment fragString;
@@ -60,8 +63,8 @@ public class DisplayCarInfoActivity extends AppCompatActivity {
         deleteButton = (Button) findViewById(R.id.displ_button_delete_id);
         editButton = (Button) findViewById(R.id.edit_button_id);
         reminderButton = (Button) findViewById(R.id.reminderButton_id);
+        facebookButton = (Button) findViewById(R.id.facebook);
         DateTimeFormatter fmt = DateTimeFormat.forPattern("d MMMM, yyyy");
-
 
 
         currentObject = carDao.load(currentDaoId);
@@ -75,54 +78,59 @@ public class DisplayCarInfoActivity extends AppCompatActivity {
             carName.setText(currentObject.getBrand());
             carModel.setText(currentObject.getModel());
             carRegNum.setText(currentObject.getRegNum());
+
+
             textViewInsuranceStart.setText(new DateTime(currentObject.getDateOfInsuranceStart()).toString(fmt));
+
             textViewTechnicalStart.setText(new DateTime(currentObject.getDateOfTechStart()).toString(fmt));
+
+
+            Log.d("Display car acti ", "  !!!!!!!!!Powinno sie uruchomic display car activity!!!!!!!!!!!!!!");
+
+
+            countDownInsurance.start(currentObject.getDateOfInsuranceEnd() - DateTime.now().getMillis());
+            countDownTechnical.start(currentObject.getDateOfTechEnd() - DateTime.now().getMillis());
+
+            Log.d("DisplayCar", "date of insurance end: " + currentObject.getDateOfInsuranceEnd() + " now it's :" + DateTime.now().getMillis());
+
+            deleteButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(DisplayCarInfoActivity.this, MainActivity.class);
+                    intent.putExtra("currentDaoId", currentDaoId);
+                    setResult(RESULT_OK, intent);
+                    Log.d("DisplayCarActivity", "Delete button clicked with id to delete = " + currentDaoId);
+                    carDao.deleteByKey(currentDaoId);
+                    startActivity(intent);
+                    finish();
+                }
+            });
+
+            editButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    allowEdit();
+
+                }
+            });
+
+            reminderButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(DisplayCarInfoActivity.this, ReminderActivity.class);
+                    intent.putExtra("currentID", currentDaoId);
+                    startActivity(intent);
+                }
+            });
+
+            facebookButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(DisplayCarInfoActivity.this, Facebook.class);
+                    startActivity(intent);
+                }
+            });
         }
-
-
-        Log.d("Display car acti ", "  !!!!!!!!!Powinno sie uruchomic display car activity!!!!!!!!!!!!!!");
-
-
-        countDownInsurance.start(currentObject.getDateOfInsuranceEnd() - DateTime.now().getMillis());
-        countDownTechnical.start(currentObject.getDateOfTechEnd() - DateTime.now().getMillis());
-
-        Log.d("DisplayCar", "date of insurance end: " + currentObject.getDateOfInsuranceEnd() + " now it's :" + DateTime.now().getMillis());
-
-        DateTime insEnd = new DateTime(currentObject.getDateOfInsuranceEnd());
-        DateTime now = new DateTime(DateTime.now());
-        Log.d("DisplayCar", "date of insurance end: " + insEnd.toString(fmt) + " now it's :" + now.toString(fmt));
-        Log.d("DisplayCar", "Difference is : " + (currentObject.getDateOfInsuranceEnd() - DateTime.now().getMillis()));
-
-
-        deleteButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(DisplayCarInfoActivity.this, MainActivity.class);
-                intent.putExtra("currentDaoId", currentDaoId);
-                setResult(RESULT_OK, intent);
-                Log.d("DisplayCarActivity", "Delete button clicked with id to delete = " + currentDaoId);
-                carDao.deleteByKey(currentDaoId);
-                startActivity(intent);
-                finish();
-            }
-        });
-
-        editButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                allowEdit();
-
-            }
-        });
-
-        reminderButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(DisplayCarInfoActivity.this, ReminderActivity.class);
-                intent.putExtra("currentID", currentDaoId);
-                startActivity(intent);
-            }
-        });
     }
 
     public CarDao initializeDaoSession() {
@@ -237,14 +245,14 @@ public class DisplayCarInfoActivity extends AppCompatActivity {
 
     public void onUserSelectValueDates(Long date, int durationMonths, String prop) {
 
-        //Toast.makeText(DisplayCarInfoActivity.this, "Long przesłany: " + date + " |||||  int przesłany:" + durationMonths, Toast.LENGTH_SHORT).show();
         if (prop == "insuranceDateStart") {
             currentObject.setDateOfInsuranceStart(date);
             DateTime endDate = (new DateTime(date)).plusMonths(durationMonths);
             currentObject.setDateOfInsuranceEnd(endDate.getMillis());
             CarDao cd = initializeDaoSession();
             cd.insertOrReplace(currentObject);
-            countDownInsurance.start(currentObject.getDateOfInsuranceEnd() - DateTime.now().getMillis());
+            long millis = currentObject.getDateOfInsuranceEnd() - DateTime.now().getMillis();
+            countDownInsurance.start(millis);
         }
 
         if (prop == "technicalDateStart") {
@@ -253,7 +261,8 @@ public class DisplayCarInfoActivity extends AppCompatActivity {
             currentObject.setDateOfTechEnd(endDate.getMillis());
             CarDao cd = initializeDaoSession();
             cd.insertOrReplace(currentObject);
-            countDownTechnical.start(currentObject.getDateOfInsuranceEnd() - DateTime.now().getMillis());
+            long millis = currentObject.getDateOfTechEnd() - DateTime.now().getMillis();
+            countDownTechnical.start(millis);
         }
 
 

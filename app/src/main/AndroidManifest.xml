@@ -24,13 +24,18 @@
             <intent-filter>
                 <action android:name="${applicationId}.BROADCAST_ACTION" />
             </intent-filter>
-
             android:enabled="true"
             android:exported="true"
         </receiver>
+
         <service
             android:name=".Services.NotificationService"
-            android:exported="false"></service>
+            android:exported="false" />
+
+        <activity
+            android:name=".Activities.Facebook"
+            android:label="@string/title_activity_facebook"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

@@ -20,6 +20,7 @@ import com.kree.keehoo.yourcarinfo.DaoGeneratedFiles.DaoSession;
 import com.kree.keehoo.yourcarinfo.JavaClasses.DefaultMethods;
 import com.kree.keehoo.yourcarinfo.R;
 import com.kree.keehoo.yourcarinfo.Services.NotificationService;
+import com.victor.ringbutton.RingButton;
 
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
@@ -29,16 +30,15 @@ public class ReminderActivity extends AppCompatActivity {
     public static final String BROADCAST_ACTION = BuildConfig.APPLICATION_ID + ".BROADCAST_ACTION";
 
     Long currentDaoId;
-    Button scheduleNotificationButton;
     Car currentObject;
     int currentObjectHashcode;
     PendingIntent pendingIntent;
+    RingButton ringButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reminder);
-        scheduleNotificationButton = (Button) findViewById(R.id.schedule_notification_id);
         final DateTimeFormatter fmt = DateTimeFormat.forPattern("d MMMM, yyyy");
         Intent intent = getIntent();
         currentDaoId = intent.getExtras().getLong("currentID", 9000L);
@@ -52,17 +52,20 @@ public class ReminderActivity extends AppCompatActivity {
         currentObjectHashcode = currentObject.hashCode();
         Toast.makeText(ReminderActivity.this, "Current Object hashCode:   " + currentObject.hashCode(), Toast.LENGTH_SHORT).show();
 
+        //TODO - remove buttons, add logics in the ringbutton, could be for both reminders insurance and tech check.
 
-        scheduleNotificationButton.setOnClickListener(new View.OnClickListener() {
+        ringButton = (RingButton)findViewById(R.id.ringButton);
+        ringButton.setOnClickListener(new RingButton.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                scheduleNotification("Ubezpieczenia samochodu " + currentObject.getBrand() + " " + currentObject.getModel() + " o numerze rejestracyjnym " +
-                                currentObject.getRegNum() + " kończy się " + (new DateTime(currentObject.getDateOfInsuranceEnd()).toString(fmt)) +
-                                ". Pamiętaj o wznowieniu, aby nie dać się naciągnąć!",
-                        (new DateTime(currentObject
-                                .getDateOfInsuranceEnd()).
-                                minusWeeks(2)).
-                                getMillis());
+            public void clickUp() {
+                String text = "Za dwa tygodnie kończy się ubezpieczenie smaochodu"+ currentObject.getBrand() + " "+currentObject.getModel();
+scheduleNotification(text, currentObject.getDateOfInsuranceEnd());
+            }
+
+            @Override
+            public void clickDown() {
+                String text = "Za dwa tygodnie kończy ważność przeglądu technicznego"+ currentObject.getBrand() + " "+currentObject.getModel();
+                scheduleNotification(text, currentObject.getDateOfTechEnd());
             }
         });
     }
@@ -84,25 +87,27 @@ public class ReminderActivity extends AppCompatActivity {
 
         Intent broadcast = new Intent(BROADCAST_ACTION);
         broadcast.putExtra(NotificationService.EXTRA_NOTIFICATION_TEXT, text);
-        Log.d("MainActivity", "Nowy intent o nazwie broadcast (INTENT(BROADCAST_ACTION) put Extra pod zmienna text= EXTRA_NOTIFICATION_TEXT");
         PendingIntent alarmAction = PendingIntent.getBroadcast(this, currentObject.hashCode(), broadcast, PendingIntent.FLAG_UPDATE_CURRENT);
-        Log.d("MainActivity", " PendingIntent alarmAction z parametrami this, hashCode, broadcast i pendingIntent.FLAG_UPDATE_CURRENT");
         pendingIntent = alarmAction; // to jest po to, zeby miec dostep do tego samego intentu zeby go anulowac (cancel)
         alarmManager.set(AlarmManager.RTC_WAKEUP, milliseconds, alarmAction);  //dodawanie long = int najwyrazniej daje longa...
+
+        Log.d("MainActivity", "Nowy intent o nazwie broadcast (INTENT(BROADCAST_ACTION) put Extra pod zmienna text= EXTRA_NOTIFICATION_TEXT");
+        Log.d("MainActivity", " PendingIntent alarmAction z parametrami this, hashCode, broadcast i pendingIntent.FLAG_UPDATE_CURRENT");
         Log.d("MainActivity", "setAlarmManager z parametrami AlarmManager.RTC_WAKEUP, currentTime + sekundy ustawione wczesniej, alarmAction... alarmAction to jest pendingItentn powyzej");
-        Toast.makeText(ReminderActivity.this, "Alarm Ustawiony na " + milliseconds + " sekund", Toast.LENGTH_SHORT).show();
+        Toast.makeText(ReminderActivity.this, "Alarm Ustawiony na dwa tygodnie prze końcem", Toast.LENGTH_SHORT).show();
     }
 
 
-    protected void removeScheduledNotification(Long currentDaoId) {
+    protected void removeScheduledNotification() {
         Intent broadcast = new Intent(BROADCAST_ACTION);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 10, broadcast, PendingIntent.FLAG_CANCEL_CURRENT);
-        boolean alarmUp = (PendingIntent.getBroadcast(this, 10,
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, currentObject.hashCode(), broadcast, PendingIntent.FLAG_CANCEL_CURRENT);
+        boolean alarmUp = (PendingIntent.getBroadcast(this, currentObject.hashCode(),
                 new Intent(BROADCAST_ACTION),
                 PendingIntent.FLAG_NO_CREATE) != null);
-
-
         if (alarmUp == true) {
+            alarmManager.cancel(pendingIntent);
+            pendingIntent.cancel();
 
         } else {
 
