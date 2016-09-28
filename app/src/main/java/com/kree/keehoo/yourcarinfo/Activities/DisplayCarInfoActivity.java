@@ -19,8 +19,6 @@ import com.kree.keehoo.yourcarinfo.DialogFragments.EditFieldFragment;
 import com.kree.keehoo.yourcarinfo.R;
 
 import org.joda.time.DateTime;
-import org.joda.time.Months;
-import org.joda.time.Period;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
@@ -221,22 +219,18 @@ public class DisplayCarInfoActivity extends AppCompatActivity {
 
         if (currentFieldTag == "carBrand") {
             currentObject.setBrand(newValue);
-
-            Log.d(p, "Current Object Brand value:  " + currentObject.getBrand());
             CarDao carDao = initializeDaoSession();
             carDao.insertOrReplace(currentObject);
             carName.setText(currentObject.getBrand());
         }
         if (currentFieldTag == "carModel") {
             currentObject.setModel(newValue);
-            Log.d(p, "Current Object Brand value:  " + currentObject.getModel());
             CarDao carDao = initializeDaoSession();
             carDao.insertOrReplace(currentObject);
-            carModel.setText(currentObject.getBrand());
+            carModel.setText(currentObject.getModel());
         }
         if (currentFieldTag == "carRegNum") {
             currentObject.setRegNum(newValue);
-            Log.d(p, "Current Object Brand value:  " + currentObject.getRegNum());
             CarDao carDao = initializeDaoSession();
             carDao.insertOrReplace(currentObject);
             carRegNum.setText(currentObject.getRegNum());

@@ -74,6 +74,7 @@
                 <Button
                     android:id="@+id/pick_insurance_start_date_button_id"
                     android:layout_width="0px"
+                    android:textSize="10sp"
                     android:layout_height="70dp"
                     android:layout_weight="1"
                     android:layout_gravity="center_horizontal"
@@ -81,12 +82,12 @@
                     android:text="Wybierz datę rozpoczęcia ubezpieczenia" />
 
                 <Button
+                    android:textSize="10sp"
                     android:id="@+id/insurance_duration_button_id"
                     android:layout_width="0px"
                     android:layout_height="70dp"
                     android:layout_gravity="center_horizontal"
                     android:layout_weight="1"
-
                     android:text="Długość trwania ubezpieczenia" />
 
 
@@ -103,19 +104,22 @@
             <Button
                 android:id="@+id/pick_tec_start_date_button_id"
                 android:layout_width="0px"
-                android:layout_height="70dp"
                 android:layout_weight="1"
                 android:layout_gravity="center_horizontal"
-
-                android:text="Wybierz datę wykonania przeglądu" />
+                android:layout_height="75dp"
+                android:text="Wybierz datę wykonania przeglądu"
+                android:textSize="10sp"
+                />
 
             <Button
+                android:textSize="10sp"
                 android:layout_width="0px"
-                android:layout_height="wrap_content"
+                android:layout_height="75dp"
                 android:layout_weight="1"
                 android:layout_gravity="center_horizontal"
                 android:text="Wybierz długość obowiązywania przeglądu"
-                android:id="@+id/technical_duration_button_id"/>
+                android:id="@+id/technical_duration_button_id"
+               />
 
             </LinearLayout>
 
