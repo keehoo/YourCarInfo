@@ -76,21 +76,12 @@ public class DisplayCarInfoActivity extends AppCompatActivity {
             carName.setText(currentObject.getBrand());
             carModel.setText(currentObject.getModel());
             carRegNum.setText(currentObject.getRegNum());
-
-
             textViewInsuranceStart.setText(new DateTime(currentObject.getDateOfInsuranceStart()).toString(fmt));
-
             textViewTechnicalStart.setText(new DateTime(currentObject.getDateOfTechStart()).toString(fmt));
-
-
             Log.d("Display car acti ", "  !!!!!!!!!Powinno sie uruchomic display car activity!!!!!!!!!!!!!!");
-
-
             countDownInsurance.start(currentObject.getDateOfInsuranceEnd() - DateTime.now().getMillis());
             countDownTechnical.start(currentObject.getDateOfTechEnd() - DateTime.now().getMillis());
-
             Log.d("DisplayCar", "date of insurance end: " + currentObject.getDateOfInsuranceEnd() + " now it's :" + DateTime.now().getMillis());
-
             deleteButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -103,7 +94,6 @@ public class DisplayCarInfoActivity extends AppCompatActivity {
                     finish();
                 }
             });
-
             editButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -111,7 +101,6 @@ public class DisplayCarInfoActivity extends AppCompatActivity {
 
                 }
             });
-
             reminderButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -120,7 +109,6 @@ public class DisplayCarInfoActivity extends AppCompatActivity {
                     startActivity(intent);
                 }
             });
-
             facebookButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -143,17 +131,26 @@ public class DisplayCarInfoActivity extends AppCompatActivity {
         carRegNum.setOnClickListener(null);
         countDownTechnical.setOnClickListener(null);
         countDownInsurance.setOnClickListener(null);
+        carName.setBackgroundResource(0);
+        carModel.setBackgroundResource(0);
+        carRegNum.setBackgroundResource(0);
+        countDownInsurance.setBackgroundResource(0);
+        countDownTechnical.setBackgroundResource(0);
 
     }
 
     private void allowEdit() {
 
+        Toast.makeText(DisplayCarInfoActivity.this, "Edycja Dozwolona, Kliknij na nazwę aby ją zmienić", Toast.LENGTH_LONG).show();
 
-        Toast.makeText(DisplayCarInfoActivity.this, "Klikanie dozwolone", Toast.LENGTH_SHORT).show();
+        carName.setBackgroundResource(R.color.colorAccent);
+        carModel.setBackgroundResource(R.color.colorAccent);
+        carRegNum.setBackgroundResource(R.color.colorAccent);
+        countDownInsurance.setBackgroundResource(R.color.colorAccent);
+        countDownTechnical.setBackgroundResource(R.color.colorAccent);
         carName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 Toast.makeText(DisplayCarInfoActivity.this, "Car name clicked: ", Toast.LENGTH_SHORT).show();
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
                 fragString = EditFieldFragment.newInstance(DisplayCarInfoActivity.this, "carBrand");
