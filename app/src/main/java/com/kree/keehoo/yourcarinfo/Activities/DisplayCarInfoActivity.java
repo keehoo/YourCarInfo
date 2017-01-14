@@ -27,68 +27,43 @@ import cn.iwgang.countdownview.CountdownView;
 public class DisplayCarInfoActivity extends AppCompatActivity {
 
     private static final String p = "  DisplayCarActivityInfo  ";
-    private Button deleteButton;
-    private Button editButton;
-    private Button reminderButton;
-    private Button facebookButton;
     private CountdownView countDownInsurance;
     private CountdownView countDownTechnical;
     private EditFieldFragment fragString;
-    private TextView textViewInsuranceStart;
-    private TextView textViewTechnicalStart;
     private TextView carName;
     private TextView carModel;
     private TextView carRegNum;
     private CarDao carDao;
     private Car currentObject;
     private long currentDaoId;
+    private TextView textViewInsuranceStart;
+    private TextView textViewTechnicalStart;
+    DateTimeFormatter fmt;
+    Button deleteButton;
+    Button editButton;
+    Button reminderButton;
+    Button facebookButton;
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) throws NullPointerException {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_display_car_info);
+        initializeViews();
         carDao = initializeDaoSession();
         Intent intent = getIntent();
         currentDaoId = intent.getLongExtra("car_id", 100000);  //TODO: Need to add exemption handling when the value is 100000;
-        textViewInsuranceStart = (TextView) findViewById(R.id.insurance_date_textView_id);
-        textViewTechnicalStart = (TextView) findViewById(R.id.technical_date_textView_id);
-        countDownTechnical = (CountdownView) findViewById(R.id.count_down_ins_id);
-        countDownInsurance = (CountdownView) findViewById(R.id.count_down_tech_id);
-        carName = (TextView) findViewById(R.id.display_car_name);
-        carModel = (TextView) findViewById(R.id.display_car_model);
-        carRegNum = (TextView) findViewById(R.id.insurance);
-        deleteButton = (Button) findViewById(R.id.displ_button_delete_id);
-        editButton = (Button) findViewById(R.id.edit_button_id);
-        reminderButton = (Button) findViewById(R.id.reminderButton_id);
-        facebookButton = (Button) findViewById(R.id.facebook);
-        DateTimeFormatter fmt = DateTimeFormat.forPattern("d MMMM, yyyy");
 
-
-        currentObject = carDao.load(currentDaoId);
-
-        if (currentObject == null) Log.d("DisplayActivity", "Curent object is null");
-        else {
-            Log.d("DisplayCarActivity", "current object isn't null" + currentObject.toString());
-            Log.d("DisplayCarActivity  ", " current object brand " + currentObject.getBrand());
-            Log.d("DisplayCarActivity  ", " current object model " + currentObject.getModel());
-            //Log.d("")
-            carName.setText(currentObject.getBrand());
-            carModel.setText(currentObject.getModel());
-            carRegNum.setText(currentObject.getRegNum());
-            textViewInsuranceStart.setText(new DateTime(currentObject.getDateOfInsuranceStart()).toString(fmt));
-            textViewTechnicalStart.setText(new DateTime(currentObject.getDateOfTechStart()).toString(fmt));
-            Log.d("Display car acti ", "  !!!!!!!!!Powinno sie uruchomic display car activity!!!!!!!!!!!!!!");
-            countDownInsurance.start(currentObject.getDateOfInsuranceEnd() - DateTime.now().getMillis());
-            countDownTechnical.start(currentObject.getDateOfTechEnd() - DateTime.now().getMillis());
-            Log.d("DisplayCar", "date of insurance end: " + currentObject.getDateOfInsuranceEnd() + " now it's :" + DateTime.now().getMillis());
+        if (currentObject == null) {
+            throw new NullPointerException("current object from the db is null, there's seems to be a problem with is " + intent.getLongExtra("car_id", 100000) + "\n if the above mentioned id equal 100000 then it's a dfault value and must assessed!");
+        } else {
+            setDataInField();
             deleteButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(DisplayCarInfoActivity.this, MainActivity.class);
                     intent.putExtra("currentDaoId", currentDaoId);
                     setResult(RESULT_OK, intent);
-                    Log.d("DisplayCarActivity", "Delete button clicked with id to delete = " + currentDaoId);
                     carDao.deleteByKey(currentDaoId);
                     startActivity(intent);
                     finish();
@@ -119,6 +94,32 @@ public class DisplayCarInfoActivity extends AppCompatActivity {
         }
     }
 
+    private void initializeViews() {
+        textViewInsuranceStart = (TextView) findViewById(R.id.insurance_date_textView_id);
+        textViewTechnicalStart = (TextView) findViewById(R.id.technical_date_textView_id);
+        countDownTechnical = (CountdownView) findViewById(R.id.count_down_ins_id);
+        countDownInsurance = (CountdownView) findViewById(R.id.count_down_tech_id);
+        carName = (TextView) findViewById(R.id.display_car_name);
+        carModel = (TextView) findViewById(R.id.display_car_model);
+        carRegNum = (TextView) findViewById(R.id.insurance);
+        deleteButton = (Button) findViewById(R.id.displ_button_delete_id);
+        editButton = (Button) findViewById(R.id.edit_button_id);
+        reminderButton = (Button) findViewById(R.id.reminderButton_id);
+        facebookButton = (Button) findViewById(R.id.facebook);
+        fmt = DateTimeFormat.forPattern("d MMMM, yyyy");
+        currentObject = carDao.load(currentDaoId);
+    }
+
+    private void setDataInField() {
+        carName.setText(currentObject.getBrand());
+        carModel.setText(currentObject.getModel());
+        carRegNum.setText(currentObject.getRegNum());
+        textViewInsuranceStart.setText(new DateTime(currentObject.getDateOfInsuranceStart()).toString(fmt));
+        textViewTechnicalStart.setText(new DateTime(currentObject.getDateOfTechStart()).toString(fmt));
+        countDownInsurance.start(currentObject.getDateOfInsuranceEnd() - DateTime.now().getMillis());
+        countDownTechnical.start(currentObject.getDateOfTechEnd() - DateTime.now().getMillis());
+    }
+
     public CarDao initializeDaoSession() {
         DaoSession daoSession = ((CarApplication) getApplicationContext()).getDaoSession();
         CarDao carDao = daoSession.getCarDao();
@@ -136,13 +137,10 @@ public class DisplayCarInfoActivity extends AppCompatActivity {
         carRegNum.setBackgroundResource(0);
         countDownInsurance.setBackgroundResource(0);
         countDownTechnical.setBackgroundResource(0);
-
     }
 
     private void allowEdit() {
-
         Toast.makeText(DisplayCarInfoActivity.this, "Edycja Dozwolona, Kliknij na nazwę aby ją zmienić", Toast.LENGTH_LONG).show();
-
         carName.setBackgroundResource(R.color.colorAccent);
         carModel.setBackgroundResource(R.color.colorAccent);
         carRegNum.setBackgroundResource(R.color.colorAccent);
@@ -175,7 +173,6 @@ public class DisplayCarInfoActivity extends AppCompatActivity {
             public void onClick(View v) {
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
                 fragString = EditFieldFragment.newInstance(DisplayCarInfoActivity.this, "carRegNum");
-
                 /// this argument assigning should most probably be done with hashtag or hashcde etc... need to investigate further with these.
                 fragString.show(ft, "carRegNum");
                 declineEdit();

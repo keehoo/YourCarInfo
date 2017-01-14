@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.kree.keehoo.yourcarinfo">
 
+    <uses-permission android:name="android.permission.INTERNET" />
     <application
         android:name=".DaoGeneratedFiles.CarApplication"
         android:allowBackup="true"
@@ -35,6 +36,8 @@
             android:name=".Activities.Facebook"
             android:label="@string/title_activity_facebook"
             android:theme="@style/AppTheme.NoActionBar"></activity>
+
+        <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id"/>
     </application>
 
 </manifest>
